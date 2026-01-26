@@ -60,7 +60,9 @@ public class PlayerManager {
             player.teleport(ConfigUtils.getLobby());
             LobbyItem.removeItem(player);
 
-            arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
+            }, 23L);
             checkStart(arena);
         });
     }

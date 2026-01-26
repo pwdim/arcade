@@ -28,7 +28,11 @@ public class LobbyCommand implements CommandExecutor {
                 return true;
             }
             p.teleport(ConfigUtils.getLobby());
-            LobbyItem.removeItem(p);
+            try {
+                LobbyItem.removeItem(p);
+            } catch (Exception e) {
+                return false;
+            }
 
 
 
