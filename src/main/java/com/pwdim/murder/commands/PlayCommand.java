@@ -1,10 +1,8 @@
 package com.pwdim.murder.commands;
 
 import com.pwdim.murder.Murder;
-import com.pwdim.murder.manager.game.GameState;
-import com.pwdim.murder.manager.player.PlayerManager;
 import com.pwdim.murder.utils.ColorUtil;
-import com.pwdim.murder.utils.MessageUtils;
+import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +18,7 @@ public class PlayCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player)){
-            sender.sendMessage(MessageUtils.consoleError());
+            sender.sendMessage(ConfigUtils.consoleError());
             return true;
         }
 

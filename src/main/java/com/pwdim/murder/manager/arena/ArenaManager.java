@@ -3,7 +3,7 @@ package com.pwdim.murder.manager.arena;
 import com.pwdim.murder.Murder;
 import com.pwdim.murder.manager.game.GameManager;
 import com.pwdim.murder.manager.game.GameState;
-import com.pwdim.murder.utils.MessageUtils;
+import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ public class ArenaManager {
         arena.getPlayers().forEach(uuid -> {
             Player p = Bukkit.getPlayer(uuid);
             if (p != null) {
-                p.teleport(MessageUtils.getLobby());
+                p.teleport(ConfigUtils.getLobby());
             }
         });
 
