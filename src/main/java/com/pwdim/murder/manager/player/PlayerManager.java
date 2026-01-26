@@ -7,9 +7,8 @@ import com.pwdim.murder.manager.arena.ArenaManager;
 import com.pwdim.murder.manager.game.GameManager;
 import com.pwdim.murder.manager.game.GameState;
 import com.pwdim.murder.utils.ColorUtil;
-import com.pwdim.murder.utils.MessageUtils;
+import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class PlayerManager {
 
         Arena bestArena = manager.getActiveArenas().values().stream()
                 .filter(arena -> arena.getState() == GameState.WAITING)
-                .filter(arena -> arena.getPlayers().size() < MessageUtils.getMaxPLayers())
+                .filter(arena -> arena.getPlayers().size() < ConfigUtils.getMaxPLayers())
                 .max(Comparator.comparingInt(arena -> arena.getPlayers().size()))
                 .orElse(null);
 
@@ -56,9 +55,9 @@ public class PlayerManager {
     public void sendToLobby(Player player, Arena arena){
         Bukkit.getScheduler().runTask(plugin, () -> {
             arena.getPlayers().remove(player.getUniqueId());
-            player.teleport(MessageUtils.getLobby());
+            player.teleport(ConfigUtils.getLobby());
 
-            arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+MessageUtils.getMaxPLayers()+"&7)");
+            arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
         });
     }
 
@@ -67,12 +66,12 @@ public class PlayerManager {
             player.teleport(arena.getWorld().getSpawnLocation());
             arena.getPlayers().add(player.getUniqueId());
 
-            arena.broadcastArena("&b" + player.getName() + " &eentrou na partida &7(&a" + arena.getPlayers().size() + "/"+MessageUtils.getMaxPLayers()+"&7)");
+            arena.broadcastArena("&b" + player.getName() + " &eentrou na partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
         });
     }
 
     private void checkStart(Arena arena) {
-        if (arena.getPlayers().size() >= MessageUtils.getMinPlayers() && arena.getState() == GameState.WAITING) {
+        if (arena.getPlayers().size() >= ConfigUtils.getMinPlayers() && arena.getState() == GameState.WAITING) {
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
         }
     }

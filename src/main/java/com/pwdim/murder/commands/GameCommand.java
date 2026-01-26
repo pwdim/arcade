@@ -6,12 +6,11 @@ import com.pwdim.murder.manager.arena.Arena;
 import com.pwdim.murder.manager.game.GameManager;
 import com.pwdim.murder.manager.game.GameState;
 import com.pwdim.murder.utils.ColorUtil;
-import com.pwdim.murder.utils.MessageUtils;
+import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class GameCommand implements CommandExecutor {
     private final GameManager gameManager;
@@ -26,13 +25,13 @@ public class GameCommand implements CommandExecutor {
 
 
         if (!(sender instanceof Player)){
-            sender.sendMessage(MessageUtils.consoleError());
+            sender.sendMessage(ConfigUtils.consoleError());
             return true;
         }
 
         Player p = (Player) sender;
         if (!(p.hasPermission("arcade.manage"))){
-            p.sendMessage(MessageUtils.noPermMSG());
+            p.sendMessage(ConfigUtils.noPermMSG());
             return true;
         }
         Arena arenaAtual = plugin.getArenaManager().getActiveArenas().values().stream()

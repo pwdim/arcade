@@ -2,7 +2,7 @@ package com.pwdim.murder.manager.arena;
 
 import com.pwdim.murder.manager.game.GameState;
 import com.pwdim.murder.utils.ColorUtil;
-import com.pwdim.murder.utils.MessageUtils;
+import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class Arena {
     }
 
     public void titleArena(String title, String subtitle, int fadeIn, int stay, int fadeOut){
-        players.forEach(uuid -> MessageUtils.sendTitle(Bukkit.getPlayer(uuid), title, subtitle, fadeIn, stay, fadeOut));
+        players.forEach(uuid -> ConfigUtils.sendTitle(Bukkit.getPlayer(uuid), title, subtitle, fadeIn, stay, fadeOut));
     }
 
 }

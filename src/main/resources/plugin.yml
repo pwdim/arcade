@@ -15,3 +15,11 @@ commands:
       - play
       - playmurder
       - murderjoin
+  lobby:
+    description: Voltar ao lobby
+    permission: ""
+    aliases:
+      - l
+      - hub
+      - leave
+      - back
