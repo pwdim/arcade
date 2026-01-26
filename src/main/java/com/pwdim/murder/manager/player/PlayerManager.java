@@ -40,6 +40,7 @@ public class PlayerManager {
             player.sendMessage(ColorUtil.color("&aConectando..."));
             teleportToArena(player, bestArena);
             LobbyItem.giveItem(player);
+            checkStart(bestArena);
         } else {
             player.sendMessage(ColorUtil.color("&aConectando..."));
 
@@ -59,6 +60,7 @@ public class PlayerManager {
             LobbyItem.removeItem(player);
 
             arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
+            checkStart(arena);
         });
     }
 
@@ -68,12 +70,17 @@ public class PlayerManager {
             arena.getPlayers().add(player.getUniqueId());
 
             arena.broadcastArena("&b" + player.getName() + " &eentrou na partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
+            checkStart(arena);
         });
     }
 
     private void checkStart(Arena arena) {
-        if (arena.getPlayers().size() >= ConfigUtils.getMinPlayers() && arena.getState() == GameState.WAITING) {
+        if ((arena.getPlayers().size() >= ConfigUtils.getMinPlayers()) && (arena.getState() == GameState.WAITING)) {
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
+        }
+        if ((arena.getPlayers().size() < ConfigUtils.getMinPlayers()) && (arena.getState() == GameState.STARTING)){
+            plugin.getGameManager().setGameState(arena, GameState.WAITING);
+            arena.broadcastArena(ColorUtil.color("&cJogadores insuficientes, contador cancelado!"));
         }
     }
 }
