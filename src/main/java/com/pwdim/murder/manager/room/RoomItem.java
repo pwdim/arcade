@@ -96,16 +96,14 @@ public class RoomItem implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (!event.getInventory().getTitle().contains("Salas - Página")) return;
-
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         int currentPage = Integer.parseInt(event.getInventory().getTitle().replaceAll("[^0-9]", "")) - 1;
         RoomInventory gui = new RoomInventory(plugin);
 
-        if (event.getSlot() == 53 && event.getCurrentItem().getType() != Material.AIR) {
+        if (event.getSlot() == 53 && event.getCurrentItem().equals(nextPageItem())) {
             player.openInventory(gui.getInventory(currentPage + 1));
-        } else if (event.getSlot() == 45 && event.getCurrentItem().getType() != Material.AIR) {
+        } else if (event.getSlot() == 45 && event.getCurrentItem().equals(backPageItem())) {
             player.openInventory(gui.getInventory(currentPage - 1));
         }
     }
