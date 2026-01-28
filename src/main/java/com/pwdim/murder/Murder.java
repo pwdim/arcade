@@ -2,7 +2,7 @@ package com.pwdim.murder;
 
 import com.pwdim.murder.commands.*;
 import com.pwdim.murder.itens.LobbyItem;
-import com.pwdim.murder.itens.RoomItem;
+import com.pwdim.murder.manager.room.RoomItem;
 import com.pwdim.murder.listeners.BuildListeners;
 import com.pwdim.murder.manager.arena.ArenaEgine;
 import com.pwdim.murder.manager.arena.ArenaManager;

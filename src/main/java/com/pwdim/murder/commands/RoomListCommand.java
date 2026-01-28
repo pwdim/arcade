@@ -1,6 +1,7 @@
 package com.pwdim.murder.commands;
 
-import com.pwdim.murder.itens.RoomItem;
+import com.pwdim.murder.manager.room.RoomInventory;
+import com.pwdim.murder.manager.room.RoomItem;
 import com.pwdim.murder.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +24,7 @@ public class RoomListCommand implements CommandExecutor {
             return true;
         }
 
-        p.openInventory(RoomItem.roomMenuInventory());
+        p.openInventory(RoomInventory.roomMenuInventory(1));
         p.updateInventory();
         return false;
     }

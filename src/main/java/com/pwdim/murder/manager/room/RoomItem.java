@@ -1,13 +1,14 @@
-package com.pwdim.murder.itens;
+package com.pwdim.murder.manager.room;
 
 import com.pwdim.murder.Murder;
 import com.pwdim.murder.manager.arena.Arena;
 import com.pwdim.murder.utils.ColorUtil;
 import com.pwdim.murder.utils.ConfigUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,7 +24,7 @@ public class RoomItem implements Listener {
     }
 
 
-    private static ItemStack roomItem(Arena arena){
+    public static ItemStack roomItem(Arena arena){
         ItemStack item = null;
         List<String> lore = new ArrayList<>();
         String state = "";
@@ -71,22 +72,41 @@ public class RoomItem implements Listener {
         return item;
     }
 
-    public static Inventory roomMenuInventory(){
-        Inventory inventory = Bukkit.createInventory(null, 54, ColorUtil.color("&eMenu de Salas"));
-        final int[] arenaItemCount = {9};
+    public static ItemStack nextPageItem(){
+        ItemStack item = new ItemStack(Material.ARROW, 1);
+        ItemMeta meta = item.getItemMeta();
 
-        plugin.getArenaManager().getActiveArenas()
-                .forEach((s, arena) -> {
-                    if (plugin.getArenaManager().getActiveArenas().size() < 1){
-                        inventory.setItem(21, nullItem());
-                    } else {
-                        arenaItemCount[0]++;
-                        inventory.setItem(arenaItemCount[0], roomItem(arena));
-                    }
-                });
+        meta.setDisplayName(ColorUtil.color("&aPróxima Página"));
+        item.setItemMeta(meta);
 
+        return item;
 
-        return inventory;
+    }
+
+    public static ItemStack backPageItem(){
+        ItemStack item = new ItemStack(Material.ARROW, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&ePágina Anterior"));
+        item.setItemMeta(meta);
+
+        return item;
+
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        if (!event.getInventory().getTitle().contains("Salas - Página")) return;
+
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        int currentPage = Integer.parseInt(event.getInventory().getTitle().replaceAll("[^0-9]", "")) - 1;
+
+        if (event.getSlot() == 53 && event.getCurrentItem().getType() != Material.AIR) {
+            player.openInventory(RoomInventory.roomMenuInventory(currentPage + 1));
+        } else if (event.getSlot() == 45 && event.getCurrentItem().getType() != Material.AIR) {
+            player.openInventory(RoomInventory.roomMenuInventory(currentPage - 1));
+        }
     }
 
 
