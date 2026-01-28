@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RoomItem implements Listener {
 
-    private static Murder plugin;
+    private final Murder plugin;
 
     public RoomItem(Murder plugin){
         this.plugin = plugin;

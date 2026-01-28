@@ -19,7 +19,7 @@ public class RoomInventory {
     }
 
     public Inventory getInventory(int page){
-        Inventory inventory = Bukkit.createInventory(null, 54, ColorUtil.color("&bMenu de salas &7- Pág: &e" + (page + 1)));
+        Inventory inventory = Bukkit.createInventory(null, 54, ColorUtil.color("&bMenu de salas  &aPág: " + (page + 1)));
 
         List<Arena> arenaList = new ArrayList<>(plugin.getArenaManager().getActiveArenas().values());
 
