@@ -73,14 +73,15 @@ public class RoomItem implements Listener {
 
     public static Inventory roomMenuInventory(){
         Inventory inventory = Bukkit.createInventory(null, 54, ColorUtil.color("&eMenu de Salas"));
-        int arenaItemCount = 9;
+        final int[] arenaItemCount = {9};
 
         plugin.getArenaManager().getActiveArenas()
                 .forEach((s, arena) -> {
-                    if (plugin.getArenaManager().getActiveArenas().isEmpty()){
+                    if (plugin.getArenaManager().getActiveArenas().size() < 1){
                         inventory.setItem(21, nullItem());
                     } else {
-                        inventory.setItem(arenaItemCount+1, roomItem(arena));
+                        arenaItemCount[0]++;
+                        inventory.setItem(arenaItemCount[0], roomItem(arena));
                     }
                 });
 
