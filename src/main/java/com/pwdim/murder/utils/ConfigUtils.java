@@ -22,21 +22,21 @@ public class ConfigUtils {
     }
 
     public static String consoleError(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messsages");
+        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messages");
         String msg = section.getString("console-error", "&cVocê precisa ser um jogador!");
 
         return ColorUtil.color(msg);
     }
 
     public static String noPermMSG(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messsages");
+        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messages");
         String msg = section.getString("no-perm", "&cSem permissão!");
 
         return ColorUtil.color(msg);
     }
 
     public static String alreadyLobby(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messsages");
+        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Murder").getConfig().getConfigurationSection("messages");
         String msg = section.getString("already-lobby", "&cVocẽ já esta no Lobby!");
 
         return ColorUtil.color(msg);
