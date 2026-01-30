@@ -1,7 +1,7 @@
-name: Murder
+name: Arcade
 version: '${version}'
-main: com.pwdim.murder.Murder
-description: §aMinigame Murder
+main: com.pwdim.arcade.Arcade
+description: §bMinigame Arcade
 depend:
   - SlimeWorldManager
 commands:
