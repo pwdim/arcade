@@ -1,10 +1,13 @@
 package com.pwdim.arcade.manager.room;
 
+import com.pwdim.arcade.Arcade;
 import com.pwdim.arcade.manager.arena.Arena;
 import com.pwdim.arcade.utils.ColorUtil;
+import com.pwdim.arcade.utils.GeralUtils;
 import com.pwdim.arcade.utils.NMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,8 +15,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RoomManageInventory implements Listener {
+
+    private static Arcade plugin;
+
+    public RoomManageInventory(Arcade plugin){
+        this.plugin = plugin;
+    }
 
     public static ItemStack deleteRoomItem(){
         ItemStack item = new ItemStack(Material.BARRIER, 1);
@@ -25,6 +35,19 @@ public class RoomManageInventory implements Listener {
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    public static ItemStack playersRoomItem(Player p){
+        ItemStack item = GeralUtils.getHead(p);
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ColorUtil.color("&eVerifique os jogadores da partida"));
+        meta.setLore(lore);
+        meta.setDisplayName(ColorUtil.color("&a&lLISTA DE JOGADORES"));
+        item.setItemMeta(meta);
+
+        return item;
+
     }
 
     public static ItemStack confirmRemoveRoomItem(){
@@ -84,6 +107,33 @@ public class RoomManageInventory implements Listener {
         return inv;
     }
 
+    public static Inventory playersListInventory(String arenaID) {
+        Arena arena = plugin.getArenaManager().getArena(arenaID);
+        if (arena == null) return null;
+        Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eLista de Jogadores "));
+
+        for (int i = 9; i < 18; i++) {
+            inv.setItem(i, fillItem());
+        }
+
+        inv.setItem(4, RoomItem.roomItem(arena));
+        int i = 20;
+
+        for (UUID uuid : arena.getPlayers()){
+            Player p = Bukkit.getPlayer(uuid);
+            ItemStack head = GeralUtils.getHead(p);
+            head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
+            head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
+            head = NMSUtils.setCustomNBT(head,"action", "arena_players_manage");
+
+            inv.setItem(i, head);
+            i++;
+        }
+
+
+        return inv;
+    }
+
     public static Inventory manageInventory(Arena arena){
         Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eGerenciar Sala"));
 
@@ -97,7 +147,12 @@ public class RoomManageInventory implements Listener {
         delete = NMSUtils.setCustomNBT(delete, "manageArenaID", arena.getId());
         delete = NMSUtils.setCustomNBT(delete,"action", "arena_delete");
 
+        ItemStack list = playersRoomItem(Bukkit.getPlayer(arena.getPlayers().get(0)));
+        list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
+        list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+
         inv.setItem(20, delete);
+        inv.setItem(21, list);
 
         return inv;
     }
