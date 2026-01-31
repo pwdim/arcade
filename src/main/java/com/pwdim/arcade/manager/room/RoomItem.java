@@ -5,7 +5,9 @@ import com.pwdim.arcade.manager.arena.Arena;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import com.pwdim.arcade.utils.NMSUtils;
+import org.bukkit.Instrument;
 import org.bukkit.Material;
+import org.bukkit.Note;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -126,17 +128,30 @@ public class RoomItem implements Listener {
             }
         }
 
+        if (title.contains("Gerenciar Salas")){
+
+            String arenaID = NMSUtils.getCustomNBT(item, "arenaID");
+            if (arenaID != null) {
+                Arena arena = plugin.getArenaManager().getArena(arenaID);
+                if (arena != null && item.equals(RoomManageInventory.deleteRoomItem()))
+                    player.openInventory(RoomManageInventory.deleteRoomInventory(arena));
+            }
+
+        }
+
 
         String action = NMSUtils.getCustomNBT(item, "action");
         if (action != null) {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
 
             if (action.equals("confirm_delete")) {
-                player.sendMessage("§cArena " + manageArenaID + " removida!");
+                plugin.getArenaManager().finishArena(manageArenaID);
+                player.sendMessage(ColorUtil.color("&bArena &a" + manageArenaID + " &cfinalizada com sucesso"));
+                player.playNote(player.getLocation(), Instrument.BASS_GUITAR, Note.natural(0, Note.Tone.A));
                 player.closeInventory();
             } else if (action.equals("cancel_delete")) {
                 player.closeInventory();
-                player.sendMessage("§eAção cancelada.");
+                player.playNote(player.getLocation(), Instrument.BASS_DRUM, Note.natural(0, Note.Tone.A));
             }
         }
     }

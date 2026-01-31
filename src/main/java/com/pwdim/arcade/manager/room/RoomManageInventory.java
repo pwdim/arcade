@@ -15,8 +15,8 @@ import java.util.List;
 
 public class RoomManageInventory implements Listener {
 
-    public ItemStack removeRoomItem(){
-        ItemStack item = new ItemStack(Material.BARRIER, 1);
+    public static ItemStack deleteRoomItem(){
+        ItemStack item = new ItemStack(Material.BARRIER, 14);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ColorUtil.color("&cCancelar partida e excluir mundo"));
@@ -28,7 +28,7 @@ public class RoomManageInventory implements Listener {
     }
 
     public static ItemStack confirmRemoveRoomItem(){
-        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 14);
+        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 1);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ColorUtil.color("&aRemover sala"));
@@ -52,7 +52,7 @@ public class RoomManageInventory implements Listener {
     }
 
     private static ItemStack fillItem(){
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 13);
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ColorUtil.color("&r"));
         item.setItemMeta(meta);
@@ -61,10 +61,10 @@ public class RoomManageInventory implements Listener {
     }
 
 
-    public static Inventory manageInventory(Arena arena) {
-        Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&bGerenciar Arena " + arena.getId()));
+    public static Inventory deleteRoomInventory(Arena arena) {
+        Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eRemover Sala? "));
 
-        for (int i = 8; i < 17; i++) {
+        for (int i = 9; i < 18; i++) {
             inv.setItem(i, fillItem());
         }
 
@@ -80,6 +80,24 @@ public class RoomManageInventory implements Listener {
 
         inv.setItem(21, cancel);
         inv.setItem(23, confirm);
+
+        return inv;
+    }
+
+    public static Inventory manageInventory(Arena arena){
+        Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eGerenciar Sala"));
+
+        for (int i = 9; i < 18; i++) {
+            inv.setItem(i, fillItem());
+        }
+
+        inv.setItem(4, RoomItem.roomItem(arena));
+
+        ItemStack delete = deleteRoomItem();
+        delete = NMSUtils.setCustomNBT(delete, "manageArenaID", arena.getId());
+        delete = NMSUtils.setCustomNBT(delete,"action", "deletearena");
+
+        inv.setItem(20, delete);
 
         return inv;
     }
