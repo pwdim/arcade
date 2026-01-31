@@ -97,29 +97,56 @@ public class RoomItem implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        e.setCancelled(true);
-        Player player = (Player) e.getWhoClicked();
-        int currentPage = Integer.parseInt(e.getInventory().getTitle().replaceAll("[^0-9]", "")) - 1;
-        RoomInventory gui = new RoomInventory(plugin);
+        ItemStack item = e.getCurrentItem();
+        if (item == null || item.getType() == Material.AIR) return;
 
-        if (e.getSlot() == 53 && e.getCurrentItem().equals(nextPageItem())) {
-            player.openInventory(gui.getInventory(currentPage + 1));
-        } else if (e.getSlot() == 45 && e.getCurrentItem().equals(backPageItem())) {
-            player.openInventory(gui.getInventory(currentPage - 1));
+
+        e.setCancelled(true);
+
+        Player player = (Player) e.getWhoClicked();
+        String title = e.getInventory().getTitle();
+
+        if (title.contains("Menu de salas")) {
+            if (e.getSlot() == 53 && item.getType() == Material.ARROW) {
+                int currentPage = extractPage(title);
+                player.openInventory(RoomInventory.getInventory(currentPage + 1));
+            } else if (e.getSlot() == 45 && item.getType() == Material.ARROW) {
+                int currentPage = extractPage(title);
+                if (currentPage > 0) {
+                    player.openInventory(RoomInventory.getInventory(currentPage - 1));
+                }
+            }
+
+            String arenaID = NMSUtils.getCustomNBT(item, "arenaID");
+            if (arenaID != null) {
+                Arena arena = plugin.getArenaManager().getArena(arenaID);
+                if (arena != null) {
+                    player.openInventory(RoomManageInventory.manageInventory(arena));
+                }
+            }
+        }
+
+
+        String action = NMSUtils.getCustomNBT(item, "action");
+        if (action != null) {
+            String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
+
+            if (action.equals("confirm_delete")) {
+                player.sendMessage("§cArena " + manageArenaID + " removida!");
+                player.closeInventory();
+            } else if (action.equals("cancel_delete")) {
+                player.closeInventory();
+                player.sendMessage("§eAção cancelada.");
+            }
         }
     }
 
-    @EventHandler
-    public void onPlayerClick(InventoryClickEvent event) {
-        ItemStack item = event.getCurrentItem();
-        if (item == null || !item.hasItemMeta()) return;
-
-        String action = NMSUtils.getCustomNBT(item, "action");
-        String arenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
-
-        if ("confirm_delete".equals(action)) {
-            event.getWhoClicked().sendMessage("§cArena " + arenaID + " removida com sucesso!");
-            event.getWhoClicked().closeInventory();
+    private int extractPage(String title) {
+        try {
+            String parts = title.substring(title.lastIndexOf("(") + 1, title.lastIndexOf(")"));
+            return Integer.parseInt(parts) - 1;
+        } catch (Exception ex) {
+            return 0;
         }
     }
 

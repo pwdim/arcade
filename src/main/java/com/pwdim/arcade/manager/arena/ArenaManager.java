@@ -43,15 +43,17 @@ public class ArenaManager {
         arena.getPlayers().forEach(uuid -> {
             Player p = Bukkit.getPlayer(uuid);
             if (p != null) {
-                p.teleport(ConfigUtils.getLobby());
+                plugin.getPlayerManager().sendToLobby(p);
             }
         });
-
+        plugin.logger("&cFinalizando arena " + arena.getId());
         arenaEgine.deleteWorldInstace(arenaID);
         activeArenas.remove(arenaID);
 
 
-        setupNewArena(template, null);
+        if (plugin.getArenaManager().getActiveArenas().isEmpty()){
+            setupNewArena(template, null);
+        }
     }
 
     public void finishArena(String arenaID, Consumer<Arena> callback) {
@@ -66,11 +68,13 @@ public class ArenaManager {
                 p.teleport(ConfigUtils.getLobby());
             }
         });
-
+        plugin.logger("&cFinalizando arena " + arena.getId());
         arenaEgine.deleteWorldInstace(arenaID);
         activeArenas.remove(arenaID);
 
-        setupNewArena(template, null);
+        if (plugin.getArenaManager().getActiveArenas().isEmpty()){
+            setupNewArena(template, null);
+        }
 
         if (callback != null) {
             callback.accept(arena);
@@ -90,5 +94,13 @@ public class ArenaManager {
                 .filter(arena -> arena.getPlayers().contains(p.getUniqueId()))
                 .findAny()
                 .orElse(null);
+    }
+
+    public Arena getArena(String arenaID) {
+        return plugin.getArenaManager().getActiveArenas().values().stream()
+                .filter(arena -> arena.getId().equals(arenaID))
+                .findAny()
+                .orElse(null);
+
     }
 }
