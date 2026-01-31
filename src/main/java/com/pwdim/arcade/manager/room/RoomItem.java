@@ -128,17 +128,6 @@ public class RoomItem implements Listener {
             }
         }
 
-        if (title.contains("Gerenciar Salas")){
-
-            String arenaID = NMSUtils.getCustomNBT(item, "arenaID");
-            if (arenaID != null) {
-                Arena arena = plugin.getArenaManager().getArena(arenaID);
-                if (arena != null && item.equals(RoomManageInventory.deleteRoomItem()))
-                    player.openInventory(RoomManageInventory.deleteRoomInventory(arena));
-            }
-
-        }
-
 
         String action = NMSUtils.getCustomNBT(item, "action");
         if (action != null) {
@@ -152,6 +141,8 @@ public class RoomItem implements Listener {
             } else if (action.equals("cancel_delete")) {
                 player.closeInventory();
                 player.playNote(player.getLocation(), Instrument.BASS_DRUM, Note.natural(0, Note.Tone.A));
+            } else if (action.equals("arena_delete")){
+                player.openInventory(RoomManageInventory.deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
             }
         }
     }

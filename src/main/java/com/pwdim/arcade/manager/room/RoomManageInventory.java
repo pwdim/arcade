@@ -16,7 +16,7 @@ import java.util.List;
 public class RoomManageInventory implements Listener {
 
     public static ItemStack deleteRoomItem(){
-        ItemStack item = new ItemStack(Material.BARRIER, 14);
+        ItemStack item = new ItemStack(Material.BARRIER, 1);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ColorUtil.color("&cCancelar partida e excluir mundo"));
@@ -95,7 +95,7 @@ public class RoomManageInventory implements Listener {
 
         ItemStack delete = deleteRoomItem();
         delete = NMSUtils.setCustomNBT(delete, "manageArenaID", arena.getId());
-        delete = NMSUtils.setCustomNBT(delete,"action", "deletearena");
+        delete = NMSUtils.setCustomNBT(delete,"action", "arena_delete");
 
         inv.setItem(20, delete);
 
