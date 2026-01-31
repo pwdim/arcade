@@ -38,7 +38,7 @@ public class RoomDeleteCommand implements CommandExecutor {
         try{
             manager.finishArena(arenaID, (arena) -> {
                 try {
-                    p.sendMessage(ColorUtil.color("&bArena &a" + arena.getId() +" &bfinalizada com sucesso!"));
+                    p.sendMessage(ColorUtil.color("&bArena &c" + arena.getId() +" &bfinalizada com sucesso!"));
                 } catch (Exception e) {
                     p.sendMessage(ColorUtil.color("&cErro ao processar a finalização da arena."));
                     p.sendMessage(ColorUtil.color("&4&o" + e.getMessage()));

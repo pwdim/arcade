@@ -28,7 +28,7 @@ public class RoomManageInventory implements Listener {
     }
 
     public static ItemStack confirmRemoveRoomItem(){
-        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 1);
+        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 5);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ColorUtil.color("&aRemover sala"));
@@ -40,7 +40,7 @@ public class RoomManageInventory implements Listener {
     }
 
     public static ItemStack cancelRemoveRoomItem(){
-        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 5);
+        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 14);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ColorUtil.color("&cNão remover sala"));

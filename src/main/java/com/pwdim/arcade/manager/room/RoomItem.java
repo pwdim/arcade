@@ -5,6 +5,7 @@ import com.pwdim.arcade.manager.arena.Arena;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import com.pwdim.arcade.utils.NMSUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
 import org.bukkit.Material;
 import org.bukkit.Note;
@@ -133,16 +134,22 @@ public class RoomItem implements Listener {
         if (action != null) {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
 
-            if (action.equals("confirm_delete")) {
-                plugin.getArenaManager().finishArena(manageArenaID);
-                player.sendMessage(ColorUtil.color("&bArena &a" + manageArenaID + " &cfinalizada com sucesso"));
-                player.playNote(player.getLocation(), Instrument.BASS_GUITAR, Note.natural(0, Note.Tone.A));
-                player.closeInventory();
-            } else if (action.equals("cancel_delete")) {
-                player.closeInventory();
-                player.playNote(player.getLocation(), Instrument.BASS_DRUM, Note.natural(0, Note.Tone.A));
-            } else if (action.equals("arena_delete")){
-                player.openInventory(RoomManageInventory.deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
+            switch (action) {
+                case "confirm_delete":
+                    plugin.getArenaManager().finishArena(manageArenaID);
+                    player.sendMessage(ColorUtil.color("&bArena &c" + manageArenaID + " &bfinalizada com sucesso"));
+                    plugin.getArenaManager().getArena(manageArenaID).getPlayers().forEach(
+                            uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava foi interrompida!")));
+                    player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Note.Tone.A));
+                    player.closeInventory();
+                    break;
+                case "cancel_delete":
+                    player.closeInventory();
+                    player.playNote(player.getLocation(), Instrument.BASS_GUITAR, Note.natural(0, Note.Tone.A));
+                    break;
+                case "arena_delete":
+                    player.openInventory(RoomManageInventory.deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
+                    break;
             }
         }
     }
