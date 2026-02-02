@@ -2,6 +2,7 @@ package com.pwdim.arcade.listeners;
 
 import com.pwdim.arcade.Arcade;
 import com.pwdim.arcade.manager.arena.Arena;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,10 +26,10 @@ public class ChatListener implements Listener {
         if (playerArena != null) {
             e.setCancelled(true);
             playerArena.broadcastArena(p.getDisplayName() + ": &r" + e.getMessage());
+        } else {
+            e.setCancelled(false);
+            e.setFormat(p.getDisplayName() + ": "+ ChatColor.RESET + e.getMessage());
         }
-
-        e.setCancelled(false);
-        e.setFormat(p.getDisplayName() + ": &r" + e.getMessage());
 
     }
 }
