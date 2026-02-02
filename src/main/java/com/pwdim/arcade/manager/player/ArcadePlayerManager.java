@@ -41,6 +41,7 @@ public class ArcadePlayerManager {
                 break;
             case SPECTATOR:
                 p.sendMessage(ColorUtil.color("&7&lESPECTADOR"));
+                break;
 
             default:
                 setPlayerState(arcadePlayer, PlayerState.WAITING);

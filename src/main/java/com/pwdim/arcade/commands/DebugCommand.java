@@ -42,27 +42,27 @@ public class DebugCommand implements CommandExecutor {
         switch (stateType){
             case "1":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.WAITING);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
             case "2":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.DETECTIVE);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
             case "3":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.INNOCENT);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
             case "4":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.MURDERER);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
             case "5":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.WINNER);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
             case "6":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.SPECTATOR);
-                p.sendMessage(ColorUtil.color("&b mensagem no debug " + arcadePlayer.getState().toString()));
+                p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
                 break;
 
         }
