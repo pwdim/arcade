@@ -53,36 +53,35 @@ public class PlayerManager {
         }
     }
 
-    public void sendToLobby(Player player, Arena arena){
+    public void sendToLobby(Player player) {
+        Arena arena = plugin.getArenaManager().getPlayerArena(player);
+
+
+        if (arena == null) {
+            player.teleport(ConfigUtils.getLobby());
+            LobbyItem.removeItem(player);
+            return;
+        }
+
         Bukkit.getScheduler().runTask(plugin, () -> {
             arena.getPlayers().remove(player.getUniqueId());
             player.teleport(ConfigUtils.getLobby());
             LobbyItem.removeItem(player);
 
 
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                if (arena.getState() == GameState.WAITING || arena.getState() == GameState.STARTING){
-                    arena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
-                }
-                }, 23L);
+            if (arena.getState() == GameState.WAITING || arena.getState() == GameState.STARTING) {
+                String msg = ColorUtil.color("&b" + player.getName() + " &esaiu &7(&a" +
+                        arena.getPlayers().size() + "/" + ConfigUtils.getMaxPLayers() + "&7)");
+                arena.broadcastArena(msg);
+            }
+
+
             checkStart(arena);
-        });
-    }
-
-    public void sendToLobby(Player player){
-        Arena checkArena = plugin.getArenaManager().getPlayerArena(player);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            checkArena.getPlayers().remove(player.getUniqueId());
-            player.teleport(ConfigUtils.getLobby());
-            LobbyItem.removeItem(player);
 
 
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                if (checkArena.getState() == GameState.WAITING || checkArena.getState() == GameState.STARTING){
-                    checkArena.broadcastArena("&b" + player.getName() + " &esaiu da partida &7(&a" + checkArena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
-                }
-            }, 23L);
-            checkStart(checkArena);
+            if (arena.getPlayers().isEmpty() && arena.getState() == GameState.PLAYING) {
+                plugin.getGameManager().setGameState(arena, GameState.RESTARTING);
+            }
         });
     }
 
@@ -97,14 +96,16 @@ public class PlayerManager {
     }
 
     private void checkStart(Arena arena) {
-        if ((arena.getPlayers().size() >= ConfigUtils.getMinPlayers()) && (arena.getState() == GameState.WAITING)) {
+        int playersIn = arena.getPlayers().size();
+        int minNeeded = ConfigUtils.getMinPlayers();
+
+
+        if (playersIn >= minNeeded && arena.getState() == GameState.WAITING) {
+            if (playersIn < ConfigUtils.getMinPlayers()) {
+                arena.broadcastArena("§eAguardando mais jogadores para iniciar...");
+                return;
+            }
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
-        }
-        if ((arena.getPlayers().size() < ConfigUtils.getMinPlayers()) && (arena.getState() == GameState.STARTING)){
-            plugin.getGameManager().setGameState(arena, GameState.WAITING);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                arena.broadcastArena(ColorUtil.color("&cJogadores insuficientes, contador cancelado!"));
-            }, 25L);
         }
     }
 }

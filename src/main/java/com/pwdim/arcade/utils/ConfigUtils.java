@@ -18,7 +18,7 @@ public class ConfigUtils {
 
 
     public ConfigUtils(Arcade plugin) {
-        this.plugin = plugin;
+        ConfigUtils.plugin = plugin;
     }
 
     public static String consoleError(){
@@ -29,14 +29,14 @@ public class ConfigUtils {
     }
 
     public static String noPermMSG(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("messages");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("messages");
         String msg = section.getString("no-perm", "&cSem permissão!");
 
         return ColorUtil.color(msg);
     }
 
     public static String alreadyLobby(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("messages");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("messages");
         String msg = section.getString("already-lobby", "&cVocẽ já esta no Lobby!");
 
         return ColorUtil.color(msg);
@@ -45,34 +45,34 @@ public class ConfigUtils {
 
     public static Integer timeLeft(){
 
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
 
         return section.getInt("timeLeft", 30);
     }
 
     public static Location getLobby(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
         String world = section.getString("lobby-world");
 
         return Bukkit.getWorld(world).getSpawnLocation();
     }
 
     public static String getGameMap(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
 
 
         return section.getString("game-map", "academy");
     }
 
     public static Location getMapSpawn(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
         List<Double> world = section.getDoubleList("map-spawn");
         double x = world.get(0);
         double y = world.get(1);
         double z = world.get(2);
-        double yawD = world.get(4);
+        double yawD = world.get(3);
+        double pitchD = world.get(4);
         float yaw = (float) yawD;
-        double pitchD = world.get(3);
         float pitch = (float) pitchD;
 
 
@@ -80,13 +80,13 @@ public class ConfigUtils {
     }
 
     public static Integer getMinPlayers(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
 
         return section.getInt("min-players", 2);
     }
 
     public static Integer getMaxPLayers(){
-        ConfigurationSection section = Bukkit.getPluginManager().getPlugin("Arcade").getConfig().getConfigurationSection("plugin");
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("plugin");
 
         return section.getInt("max-players", 16);
     }

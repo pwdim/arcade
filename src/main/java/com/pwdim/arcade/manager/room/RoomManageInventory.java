@@ -115,11 +115,11 @@ public class RoomManageInventory implements Listener {
             inv.setItem(i, fillItem());
         }
         if (arena == null){
-            inv.setItem(21, RoomItem.nullItem());
+            inv.setItem(32, RoomItem.nullItem());
             return inv;
         }
         inv.setItem(4, RoomItem.roomItem(arena));
-        int i = 20;
+        int i = 18;
 
         if (!arena.getPlayers().isEmpty()){
             for (UUID uuid : arena.getPlayers()){
