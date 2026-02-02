@@ -48,3 +48,6 @@ commands:
       - removeroom
       - removersala
       - droproom
+  debug:
+    description: debug command
+    permission: arcade.manage

@@ -3,6 +3,7 @@ package com.pwdim.arcade;
 import com.pwdim.arcade.commands.*;
 import com.pwdim.arcade.itens.LobbyItem;
 import com.pwdim.arcade.listeners.ChatListener;
+import com.pwdim.arcade.manager.player.ArcadePlayerManager;
 import com.pwdim.arcade.manager.room.RoomItem;
 import com.pwdim.arcade.listeners.BuildListeners;
 import com.pwdim.arcade.manager.arena.ArenaEgine;
@@ -19,6 +20,7 @@ public final class Arcade extends JavaPlugin {
     private GameManager gameManager;
     private ArenaManager arenaManager;
     private PlayerManager playerManager;
+    private ArcadePlayerManager arcadePlayerManager;
 
     @Override
     public void onEnable() {
@@ -30,6 +32,7 @@ public final class Arcade extends JavaPlugin {
         this.gameManager = new GameManager(this);
 
         this.playerManager = gameManager.getPlayerManager();
+        this.arcadePlayerManager = new ArcadePlayerManager(this);
 
         getServer().getPluginManager().registerEvents(new BuildListeners(gameManager), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
@@ -43,6 +46,7 @@ public final class Arcade extends JavaPlugin {
         getCommand("rooms").setExecutor(new RoomListCommand(this));
         getCommand("roomcreate").setExecutor(new RoomCreateCommand(this));
         getCommand("roomremove").setExecutor(new RoomDeleteCommand(this));
+        getCommand("DEBUG").setExecutor(new DebugCommand(this));
 
         logger("&bO plugin foi iniciado com sucesso");
     }
@@ -88,5 +92,9 @@ public final class Arcade extends JavaPlugin {
 
     public void setPlayerManager(PlayerManager playerManager) {
         this.playerManager = playerManager;
+    }
+
+    public ArcadePlayerManager getArcadePlayerManager() {
+        return arcadePlayerManager;
     }
 }
