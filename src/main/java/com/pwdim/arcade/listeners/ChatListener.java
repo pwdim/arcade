@@ -25,6 +25,7 @@ public class ChatListener implements Listener {
         Arena playerArena = plugin.getArenaManager().getPlayerArena(p);
 
         if (playerArena == null) {
+            e.setCancelled(false);
             e.setFormat(p.getDisplayName() + ": &r" + e.getMessage());
         }
 
