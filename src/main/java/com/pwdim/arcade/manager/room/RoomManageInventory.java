@@ -133,7 +133,7 @@ public class RoomManageInventory implements Listener {
                 i++;
             }
         } else {
-            inv.setItem(22, RoomItem.nullItem());
+            inv.setItem(32, RoomItem.nullItem());
         }
 
 

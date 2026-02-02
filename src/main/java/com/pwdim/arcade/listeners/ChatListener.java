@@ -1,0 +1,36 @@
+package com.pwdim.arcade.listeners;
+
+import com.pwdim.arcade.Arcade;
+import com.pwdim.arcade.manager.arena.Arena;
+import com.pwdim.arcade.manager.player.PlayerManager;
+import net.minecraft.server.v1_8_R3.PacketListener;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+public class ChatListener implements Listener {
+
+    public final Arcade plugin;
+
+    public ChatListener(Arcade plugin){
+        this.plugin = plugin;
+    }
+
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent e){
+        Player p = e.getPlayer();
+
+        Arena playerArena = plugin.getArenaManager().getPlayerArena(p);
+
+        if (playerArena == null) {
+            e.setFormat(p.getDisplayName() + ": &r" + e.getMessage());
+        }
+
+        e.setCancelled(true);
+        assert playerArena != null;
+        playerArena.broadcastArena(p.getDisplayName() + ": &r" + e.getMessage());
+
+    }
+}

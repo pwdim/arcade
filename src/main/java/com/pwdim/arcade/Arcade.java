@@ -2,6 +2,7 @@ package com.pwdim.arcade;
 
 import com.pwdim.arcade.commands.*;
 import com.pwdim.arcade.itens.LobbyItem;
+import com.pwdim.arcade.listeners.ChatListener;
 import com.pwdim.arcade.manager.room.RoomItem;
 import com.pwdim.arcade.listeners.BuildListeners;
 import com.pwdim.arcade.manager.arena.ArenaEgine;
@@ -31,6 +32,7 @@ public final class Arcade extends JavaPlugin {
         this.playerManager = gameManager.getPlayerManager();
 
         getServer().getPluginManager().registerEvents(new BuildListeners(gameManager), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new ArenaEgine(this), this);
         getServer().getPluginManager().registerEvents(new LobbyItem(this), this);
         getServer().getPluginManager().registerEvents(new RoomItem(this), this);
@@ -46,7 +48,7 @@ public final class Arcade extends JavaPlugin {
     }
 
     public String getPrefix() {
-        String prefixConfig = getConfig().getString("plugin.prefix", "&c[Arcade]");
+        String prefixConfig = getConfig().getString("plugin.prefix", "&b[Arcade]");
         return ColorUtil.color(prefixConfig + " &r");
     }
 

@@ -39,8 +39,8 @@ public class LobbyItem implements Listener {
     }
 
     public static void removeItem(Player p){
-        if (p.getInventory().getItem(8).equals(lobbyItem())){
-            p.getInventory().setItem(8, null);
+        if (p.getInventory().contains(lobbyItem())){
+            p.getInventory().removeItem(lobbyItem());
         }
     }
 
