@@ -67,7 +67,7 @@ public class RoomItem implements Listener {
     }
 
     public static ItemStack nullItem(){
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
         ItemMeta meta = item.getItemMeta();
 
         meta.setDisplayName(ColorUtil.color("&cNada encontrado!"));
@@ -153,6 +153,9 @@ public class RoomItem implements Listener {
                 case "arena_players":
                     Arena arena = plugin.getArenaManager().getArena(manageArenaID);
                     player.openInventory(RoomManageInventory.playersListInventory(arena));
+                    break;
+                case "arena_players_manage":
+                    player.sendMessage("arena_players_manage");
                     break;
             }
         }

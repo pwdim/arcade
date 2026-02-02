@@ -121,7 +121,7 @@ public class RoomManageInventory implements Listener {
         inv.setItem(4, RoomItem.roomItem(arena));
         int i = 18;
 
-        if (!arena.getPlayers().isEmpty()){
+        if (!(arena.getPlayers().isEmpty())){
             for (UUID uuid : arena.getPlayers()){
                 Player p = Bukkit.getPlayer(uuid);
                 ItemStack head = GeralUtils.getHead(p);
@@ -133,7 +133,7 @@ public class RoomManageInventory implements Listener {
                 i++;
             }
         } else {
-            inv.setItem(21, RoomItem.nullItem());
+            inv.setItem(22, RoomItem.nullItem());
         }
 
 
