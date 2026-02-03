@@ -123,8 +123,8 @@ public class PlayerManager {
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
         }
 
-        if (arena.getState() == GameState.PLAYING && playersIn == 1){
-            arena.setState(GameState.ENDING);
+        if ((arena.getState() == GameState.PLAYING) && (playersIn == 1)){
+            gameManager.setGameState(arena, GameState.ENDING);
         }
     }
 }
