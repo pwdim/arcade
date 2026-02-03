@@ -1,7 +1,7 @@
 package com.pwdim.arcade.utils;
 
 
-import com.pwdim.arcade.Arcade;
+import com.pwdim.arcade.core.Arcade;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PlayerConnection;

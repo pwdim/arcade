@@ -1,10 +1,10 @@
 package com.pwdim.arcade.commands;
 
 
-import com.pwdim.arcade.Arcade;
-import com.pwdim.arcade.manager.arena.Arena;
-import com.pwdim.arcade.manager.game.GameManager;
-import com.pwdim.arcade.manager.game.GameState;
+import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.arena.model.Arena;
+import com.pwdim.arcade.modules.game.GameManager;
+import com.pwdim.arcade.modules.game.GameState;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.command.Command;

@@ -1,7 +1,7 @@
 package com.pwdim.arcade.commands;
 
-import com.pwdim.arcade.Arcade;
-import com.pwdim.arcade.manager.room.RoomInventory;
+import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.room.inventories.RoomInventory;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class RoomListCommand implements CommandExecutor {
 
-    public final Arcade plugin;
+    private final Arcade plugin;
 
     public RoomListCommand(Arcade plugin){
         this.plugin = plugin;

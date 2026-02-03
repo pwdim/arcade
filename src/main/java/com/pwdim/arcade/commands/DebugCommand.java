@@ -1,8 +1,8 @@
 package com.pwdim.arcade.commands;
 
-import com.pwdim.arcade.Arcade;
-import com.pwdim.arcade.manager.player.ArcadePlayer;
-import com.pwdim.arcade.manager.player.PlayerState;
+import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
+import com.pwdim.arcade.modules.player.PlayerState;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.command.Command;
@@ -43,7 +43,6 @@ public class DebugCommand implements CommandExecutor {
             case "1":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.WAITING);
                 p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
-                break;
             case "2":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.DETECTIVE);
                 p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));

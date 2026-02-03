@@ -1,6 +1,6 @@
 package com.pwdim.arcade.commands;
 
-import com.pwdim.arcade.Arcade;
+import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.command.Command;
