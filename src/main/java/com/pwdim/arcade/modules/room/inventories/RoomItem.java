@@ -14,6 +14,9 @@ public class RoomItem {
 
 
     public ItemStack roomItem(Arena arena){
+        if (arena == null){
+            return nullItem();
+        }
         ItemStack item = null;
         List<String> lore = new ArrayList<>();
         String state = "";

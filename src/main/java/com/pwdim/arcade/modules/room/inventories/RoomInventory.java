@@ -24,6 +24,10 @@ public class RoomInventory {
 
         List<Arena> arenaList = new ArrayList<>(plugin.getArenaManager().getActiveArenas().values());
 
+        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_menu");
+        inventory.setItem(49, reloadItem);
+
         if (arenaList.isEmpty()){
             inventory.setItem(22, plugin.getRoomManager().getRoomItem().nullItem());
             return inventory;

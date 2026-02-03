@@ -93,6 +93,16 @@ public class RoomManageInventory {
         cancel = NMSUtils.setCustomNBT(cancel, "manageArenaID", arena.getId());
         cancel = NMSUtils.setCustomNBT(cancel, "action", "cancel_delete");
 
+        ItemStack backItem = plugin.getRoomManager().getRoomItem().backItem();
+        backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "back_delete");
+        inv.setItem(36, backItem);
+
+        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_delete");
+        inv.setItem(40, reloadItem);
+
         inv.setItem(21, cancel);
         inv.setItem(23, confirm);
 
