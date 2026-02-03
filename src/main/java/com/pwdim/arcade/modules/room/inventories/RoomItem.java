@@ -60,6 +60,28 @@ public class RoomItem {
         return item;
     }
 
+    public ItemStack backItem(){
+        ItemStack item = new ItemStack(Material.EMPTY_MAP, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&cVoltar"));
+        item.setItemMeta(meta);
+
+        return item;
+
+    }
+
+    public ItemStack reloadItem(){
+        ItemStack item = new ItemStack(Material.WATCH, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&aRecarregar"));
+        item.setItemMeta(meta);
+
+        return item;
+
+    }
+
     public ItemStack nullItem(){
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
         ItemMeta meta = item.getItemMeta();

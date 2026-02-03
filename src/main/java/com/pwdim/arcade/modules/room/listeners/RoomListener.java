@@ -54,6 +54,7 @@ public class RoomListener implements Listener {
         String action = NMSUtils.getCustomNBT(item, "action");
         if (action != null) {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
+            Arena arena = plugin.getArenaManager().getArena(manageArenaID);
 
             switch (action) {
                 case "confirm_delete":
@@ -65,18 +66,27 @@ public class RoomListener implements Listener {
                             uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava foi interrompida!")));
                     break;
                 case "cancel_delete":
-                    player.closeInventory();
-                    player.playNote(player.getLocation(), Instrument.BASS_GUITAR, Note.natural(0, Note.Tone.A));
+                    player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 2, player.getLocation().getPitch());
+                    player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(plugin.getArenaManager().getArena(manageArenaID)));
                     break;
                 case "arena_delete":
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
                     break;
                 case "arena_players":
-                    Arena arena = plugin.getArenaManager().getArena(manageArenaID);
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     break;
                 case "arena_players_manage":
-                    player.sendMessage("arena_players_manage");
+
+                    break;
+                case "back_item_playerlist":
+                    player.closeInventory();
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
+                    );
+
+                    break;
+                case "reload_item":
+                    player.updateInventory();
                     break;
             }
         }

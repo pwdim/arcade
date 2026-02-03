@@ -106,6 +106,16 @@ public class RoomManageInventory {
             inv.setItem(i, plugin.getRoomManager().getRoomItem().fillItem());
         }
         inv.setItem(4, plugin.getRoomManager().getRoomItem().roomItem(arena));
+        ItemStack backItem = plugin.getRoomManager().getRoomItem().backItem();
+        backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "back_item_playerlist");
+        inv.setItem(36, backItem);
+        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_item");
+        inv.setItem(40, reloadItem);
+
+
         int i = 18;
 
         if (!(arena.getPlayers().isEmpty())){
