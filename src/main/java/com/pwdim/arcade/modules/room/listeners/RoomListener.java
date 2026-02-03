@@ -58,15 +58,15 @@ public class RoomListener implements Listener {
 
             switch (action) {
                 case "confirm_delete":
+                    plugin.getArenaManager().getArena(manageArenaID).getPlayers().forEach(
+                            uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava está reiniciando!")));
                     plugin.getArenaManager().finishArena(manageArenaID);
                     player.closeInventory();
                     player.sendMessage(ColorUtil.color("&bArena &c" + manageArenaID + " &bfinalizada com sucesso"));
                     player.playSound(player.getLocation(), Sound.ANVIL_USE, 2, player.getLocation().getPitch());
-                    plugin.getArenaManager().getArena(manageArenaID).getPlayers().forEach(
-                            uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava foi interrompida!")));
                     break;
                 case "cancel_delete":
-                    player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 2, player.getLocation().getPitch());
+                    player.playSound(player.getLocation(), Sound.STEP_STONE, 2, player.getLocation().getPitch());
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
@@ -80,15 +80,30 @@ public class RoomListener implements Listener {
                 case "arena_players_manage":
 
                     break;
-                case "back_item_playerlist":
+                case "back_playerlist":
                     player.closeInventory();
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
 
                     break;
-                case "reload_item":
-                    player.updateInventory();
+                case "reload_playerlist":
+                    player.closeInventory();
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena)
+                    );
+                    break;
+                case "reload_manage":
+                    player.closeInventory();
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomInventory().getInventory(0)
+                    );
+                    break;
+                case "back_manage":
+                    player.closeInventory();
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
+                    );
                     break;
             }
         }
