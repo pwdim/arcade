@@ -4,10 +4,7 @@ import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.NMSUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Instrument;
-import org.bukkit.Material;
-import org.bukkit.Note;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,11 +58,11 @@ public class RoomListener implements Listener {
             switch (action) {
                 case "confirm_delete":
                     plugin.getArenaManager().finishArena(manageArenaID);
+                    player.closeInventory();
                     player.sendMessage(ColorUtil.color("&bArena &c" + manageArenaID + " &bfinalizada com sucesso"));
+                    player.playSound(player.getLocation(), Sound.ANVIL_USE, 2, player.getLocation().getPitch());
                     plugin.getArenaManager().getArena(manageArenaID).getPlayers().forEach(
                             uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava foi interrompida!")));
-                    player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Note.Tone.A));
-                    player.closeInventory();
                     break;
                 case "cancel_delete":
                     player.closeInventory();

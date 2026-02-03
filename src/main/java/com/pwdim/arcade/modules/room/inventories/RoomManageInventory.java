@@ -103,7 +103,7 @@ public class RoomManageInventory {
         Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eLista de Jogadores "));
 
         for (int i = 9; i < 18; i++) {
-            inv.setItem(i, plugin.getRoomManager().getRoomItem().roomItem(arena));
+            inv.setItem(i, plugin.getRoomManager().getRoomItem().fillItem());
         }
         inv.setItem(4, plugin.getRoomManager().getRoomItem().roomItem(arena));
         int i = 18;
