@@ -67,7 +67,9 @@ public class RoomListener implements Listener {
                     break;
                 case "cancel_delete":
                     player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 2, player.getLocation().getPitch());
-                    player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(plugin.getArenaManager().getArena(manageArenaID)));
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
+                    );
                     break;
                 case "arena_delete":
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));

@@ -150,12 +150,23 @@ public class RoomManageInventory {
         delete = NMSUtils.setCustomNBT(delete, "manageArenaID", arena.getId());
         delete = NMSUtils.setCustomNBT(delete,"action", "arena_delete");
 
-        ItemStack list = playersRoomItem(p);
-        list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
-        list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+        if (p == null){
+            Player player = Bukkit.getPlayer(UUID.fromString("b842a9d2-9548-434b-8a09-4ad3ecca119b"));
+            ItemStack list = playersRoomItem(player);
+            list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
+            list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+            inv.setItem(21, list);
+
+            inv.setItem(21, list);
+
+        } else {
+            ItemStack list = playersRoomItem(p);
+            list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
+            list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+            inv.setItem(21, list);
+        }
 
         inv.setItem(20, delete);
-        inv.setItem(21, list);
 
         return inv;
     }
