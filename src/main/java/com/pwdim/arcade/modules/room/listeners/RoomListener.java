@@ -96,13 +96,13 @@ public class RoomListener implements Listener {
                 case "reload_manage":
                     player.closeInventory();
                     player.openInventory(
-                            plugin.getRoomManager().getRoomInventory().getInventory(0)
+                            plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
                     break;
                 case "back_manage":
                     player.closeInventory();
                     player.openInventory(
-                            plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
+                            plugin.getRoomManager().getRoomInventory().getInventory(0)
                     );
                     break;
             }
