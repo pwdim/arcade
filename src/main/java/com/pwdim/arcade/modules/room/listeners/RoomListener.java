@@ -93,6 +93,7 @@ public class RoomListener implements Listener {
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(extractPage(title))
                     );
+                    break;
                 case "reload_delete":
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(arena)
