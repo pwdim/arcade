@@ -2,7 +2,7 @@ package com.pwdim.arcade.core;
 
 import com.pwdim.arcade.commands.*;
 import com.pwdim.arcade.modules.lobby.LobbyItem;
-import com.pwdim.arcade.modules.arena.listeners.ChatListener;
+import com.pwdim.arcade.modules.arena.listeners.ArenaListener;
 import com.pwdim.arcade.modules.arcadeplayer.ArcadePlayerManager;
 import com.pwdim.arcade.modules.room.RoomManager;
 import com.pwdim.arcade.modules.arena.listeners.BuildListeners;
@@ -39,7 +39,7 @@ public final class Arcade extends JavaPlugin {
 
 
         getServer().getPluginManager().registerEvents(new BuildListeners(gameManager), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        getServer().getPluginManager().registerEvents(new ArenaListener(this), this);
         getServer().getPluginManager().registerEvents(new ArenaEngine(this), this);
         getServer().getPluginManager().registerEvents(new LobbyItem(this), this);
         getServer().getPluginManager().registerEvents(new RoomListener(this), this);

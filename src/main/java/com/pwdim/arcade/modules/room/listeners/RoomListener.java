@@ -75,6 +75,7 @@ public class RoomListener implements Listener {
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
                     break;
                 case "arena_players":
+                case "reload_playerlist":
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     break;
                 case "arena_players_manage":
@@ -83,31 +84,21 @@ public class RoomListener implements Listener {
                 case "back_delete":
                 case "back_playerlist":
                 case "reload_manage":
-                    player.closeInventory();
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
 
                     break;
-                case "reload_playerlist":
-                    player.closeInventory();
-                    player.openInventory(
-                            plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena)
-                    );
-                    break;
                 case "back_manage":
-                    player.closeInventory();
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(0)
                     );
                 case "reload_delete":
-                    player.closeInventory();
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(arena)
                     );
                     break;
                 case "reload_menu":
-                    player.closeInventory();
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(0)
                     );
