@@ -74,9 +74,15 @@ public class PlayerManager {
 
 
             if (arena.getState() == GameState.WAITING || arena.getState() == GameState.STARTING) {
-                String msg = ColorUtil.color("&b" + player.getCustomName() + " &esaiu &e(&b" +
-                        arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
-                arena.broadcastArena(msg);
+                if (player.getCustomName() == null){
+                    String msg = ColorUtil.color("&7" + player.getName() + " &esaiu da partida&e(&b" +
+                            arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
+                    arena.broadcastArena(msg);
+                } else {
+                    String msg = ColorUtil.color("&7" + player.getCustomName() + " &esaiu da partida&e(&b" +
+                            arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
+                    arena.broadcastArena(msg);
+                }
             }
 
 
@@ -93,8 +99,13 @@ public class PlayerManager {
         Bukkit.getScheduler().runTask(plugin, () -> {
             player.teleport(arena.getWorld().getSpawnLocation());
             arena.getPlayers().add(player.getUniqueId());
-
-            arena.broadcastArena("&b" + player.getName() + " &eentrou na partida &7(&a" + arena.getPlayers().size() + "/"+ConfigUtils.getMaxPLayers()+"&7)");
+            if (player.getCustomName() == null){
+                arena.broadcastArena("&7" + player.getName() + " &eentrou na partida (&b" + arena.getPlayers().size() + "&e/&b"+ConfigUtils.getMaxPLayers()+"&e)");
+            } else {
+                String msg = ColorUtil.color("&7" + player.getCustomName() + " &esaiu da partida&e(&b" +
+                        arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
+                arena.broadcastArena(msg);
+            }
             checkStart(arena);
         });
     }
@@ -110,6 +121,10 @@ public class PlayerManager {
                 return;
             }
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
+        }
+
+        if (arena.getState() == GameState.PLAYING && playersIn == 1){
+            arena.setState(GameState.ENDING);
         }
     }
 }

@@ -43,6 +43,7 @@ public class DebugCommand implements CommandExecutor {
             case "1":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.WAITING);
                 p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
+                break;
             case "2":
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.DETECTIVE);
                 p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
