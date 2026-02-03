@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 
 import java.util.Comparator;
+import java.util.UUID;
 
 
 public class PlayerManager {
@@ -57,20 +58,24 @@ public class PlayerManager {
 
 
         if (arena == null) {
-            player.teleport(ConfigUtils.getLobby());
+            if (player.isOnline()){
+                player.teleport(ConfigUtils.getLobby());
+            }
             LobbyItem.removeItem(player);
             return;
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             arena.getPlayers().remove(player.getUniqueId());
-            player.teleport(ConfigUtils.getLobby());
             LobbyItem.removeItem(player);
+            if (player.isOnline()){
+                player.teleport(ConfigUtils.getLobby());
+            }
 
 
             if (arena.getState() == GameState.WAITING || arena.getState() == GameState.STARTING) {
-                String msg = ColorUtil.color("&b" + player.getName() + " &esaiu &7(&a" +
-                        arena.getPlayers().size() + "/" + ConfigUtils.getMaxPLayers() + "&7)");
+                String msg = ColorUtil.color("&b" + player.getCustomName() + " &esaiu &e(&b" +
+                        arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
                 arena.broadcastArena(msg);
             }
 

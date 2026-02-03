@@ -40,7 +40,7 @@ public class ArenaListener implements Listener {
         Arena arena = plugin.getArenaManager().getPlayerArena(p);
 
         if (arena != null) {
-            arena.getPlayers().remove(p.getUniqueId());
+            plugin.getPlayerManager().sendToLobby(p);
         }
     }
 }
