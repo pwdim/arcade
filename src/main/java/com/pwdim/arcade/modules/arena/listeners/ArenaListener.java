@@ -7,12 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class ChatListener implements Listener {
+public class ArenaListener implements Listener {
 
     public final Arcade plugin;
 
-    public ChatListener(Arcade plugin){
+    public ArenaListener(Arcade plugin){
         this.plugin = plugin;
     }
 
@@ -31,5 +32,15 @@ public class ChatListener implements Listener {
             e.setFormat(p.getDisplayName() + ": "+ ChatColor.RESET + e.getMessage());
         }
 
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e){
+        Player p = e.getPlayer();
+        Arena arena = plugin.getArenaManager().getPlayerArena(p);
+
+        if (arena != null) {
+            arena.getPlayers().remove(p.getUniqueId());
+        }
     }
 }
