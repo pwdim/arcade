@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 
 
 import java.util.Comparator;
-import java.util.UUID;
 
 
 public class PlayerManager {
@@ -36,19 +35,18 @@ public class PlayerManager {
                 .max(Comparator.comparingInt(arena -> arena.getPlayers().size()))
                 .orElse(null);
 
+        player.sendMessage(ColorUtil.color("&aConectando..."));
         if (bestArena != null) {
-            player.sendMessage(ColorUtil.color("&aConectando..."));
             teleportToArena(player, bestArena);
             LobbyItem.giveItem(player);
-            checkStart(bestArena);
+            checkState(bestArena);
         } else {
-            player.sendMessage(ColorUtil.color("&aConectando..."));
 
 
             manager.setupNewArena(ConfigUtils.getGameMap(), (newArena) -> {
                 teleportToArena(player, newArena);
                 LobbyItem.giveItem(player);
-                checkStart(newArena);
+                checkState(newArena);
             });
         }
     }
@@ -86,7 +84,7 @@ public class PlayerManager {
             }
 
 
-            checkStart(arena);
+            checkState(arena);
 
 
             if (arena.getPlayers().isEmpty() && arena.getState() == GameState.PLAYING) {
@@ -106,11 +104,11 @@ public class PlayerManager {
                         arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
                 arena.broadcastArena(msg);
             }
-            checkStart(arena);
+            checkState(arena);
         });
     }
 
-    private void checkStart(Arena arena) {
+    private void checkState(Arena arena) {
         int playersIn = arena.getPlayers().size();
         int minNeeded = ConfigUtils.getMinPlayers();
 
@@ -123,8 +121,8 @@ public class PlayerManager {
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
         }
 
-        if (arena.getState() == GameState.PLAYING && playersIn == 1){
-            arena.setState(GameState.ENDING);
+        if ((arena.getState() == GameState.PLAYING) && (playersIn == 1)){
+           arena.setState(GameState.ENDING);
         }
     }
 }
