@@ -105,7 +105,6 @@ public class RoomManageInventory {
         ItemStack head = GeneralUtils.getHead(p);
         head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
         head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
-        head = NMSUtils.setCustomNBT(head,"action", "PlayerManager_Menu");
         inv.setItem(4, head);
 
         ItemStack backItem = roomItem().backItem();
@@ -155,7 +154,7 @@ public class RoomManageInventory {
 
         ItemStack reloadItem = roomItem().reloadItem();
         reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
-        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "ArenaDelete_Menu");
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "ArenaManager_Menu");
         inv.setItem(40, reloadItem);
 
         if (p == null){

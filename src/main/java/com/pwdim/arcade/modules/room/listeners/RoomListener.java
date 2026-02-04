@@ -113,9 +113,14 @@ public class RoomListener implements Listener {
                     break;
 
                 case "PlayerManager_Menu":
-                    player.openInventory(
-                            plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target)
-                    );
+                    if (target != null){
+                        player.openInventory(
+                                plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target)
+                        );
+                    } else {
+                        player.closeInventory();
+                        player.sendMessage(ColorUtil.color("&4&lERROR"));
+                    }
                     break;
                 case "PlayerManager_GoTo":
                     plugin.getPlayerManager().sendToArena(

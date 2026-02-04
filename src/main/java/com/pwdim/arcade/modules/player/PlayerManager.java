@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 
 import java.util.Comparator;
+import java.util.UUID;
 
 
 public class PlayerManager {
@@ -54,6 +55,16 @@ public class PlayerManager {
 
     public void sendToLobby(Player player) {
         Arena arena = plugin.getArenaManager().getPlayerArena(player);
+        ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), arena);
+
+        if (arcadePlayer.getState() == PlayerState.SPECTATOR){
+            for (UUID uuid : arena.getPlayers()){
+                Player target = Bukkit.getPlayer(uuid);
+
+                target.showPlayer(player);
+                player.showPlayer(target);
+            }
+        }
 
 
         if (arena == null) {
@@ -107,7 +118,7 @@ public class PlayerManager {
                     arena.broadcastArena(msg);
                 }
             } else {
-                ArcadePlayer arcadePlayer = (ArcadePlayer) player;
+                ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), arena);
                 plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.SPECTATOR);
             }
             checkState(arena);
