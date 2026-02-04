@@ -29,6 +29,8 @@ public class ArcadePlayerManager {
         Arena arena = plugin.getArenaManager().getPlayerArena(p);
 
         switch (playerState){
+            case LOBBY:
+                break;
             case WAITING:
                 break;
             case DETECTIVE:

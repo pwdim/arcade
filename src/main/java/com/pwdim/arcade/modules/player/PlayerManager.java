@@ -11,6 +11,7 @@ import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 
 import java.util.Comparator;
@@ -58,6 +59,7 @@ public class PlayerManager {
         ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), arena);
 
         if (arcadePlayer.getState() == PlayerState.SPECTATOR){
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
             for (UUID uuid : arena.getPlayers()){
                 Player target = Bukkit.getPlayer(uuid);
 
@@ -94,6 +96,8 @@ public class PlayerManager {
                     arena.broadcastArena(msg);
                 }
             }
+
+            arcadePlayer.setState(PlayerState.LOBBY);
 
 
             checkState(arena);
