@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 
 import java.util.Comparator;
+import java.util.UUID;
 
 
 public class PlayerManager {
@@ -54,6 +55,7 @@ public class PlayerManager {
 
     public void sendToLobby(Player player) {
         Arena arena = plugin.getArenaManager().getPlayerArena(player);
+        ArcadePlayer arcadePlayer = (ArcadePlayer) player;
 
 
         if (arena == null) {
@@ -65,6 +67,14 @@ public class PlayerManager {
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
+            if (arcadePlayer.getState() == PlayerState.SPECTATOR){
+                for (UUID uuid : arena.getPlayers()){
+                    Player target = Bukkit.getPlayer(uuid);
+
+                    target.showPlayer(player);
+                    player.showPlayer(target);
+                }
+            }
             arena.getPlayers().remove(player.getUniqueId());
             LobbyItem.removeItem(player);
             if (player.isOnline()){

@@ -7,18 +7,28 @@ import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Arena {
 
-    private Arcade plugin;
+    private final Arcade plugin;
     private String id;
     private String mapName;
+    private World world;
+    private GameState state;
+    private List<UUID> players;
 
-    public Arena(Arcade plugin){
-        this.plugin = plugin;
+    public Arena(String id, String mapName, World world) {
+        this.plugin = Arcade.getPlugin(Arcade.class);
+        this.id = id;
+        this.mapName = mapName;
+        this.world = world;
+        this.state = GameState.WAITING;
+        this.players = new ArrayList<>();
     }
 
     public String getId() {
@@ -46,11 +56,8 @@ public class Arena {
     }
 
     public List<UUID> getPlayers() {
+        if (this.players == null) this.players = new ArrayList<>();
         return players;
-    }
-
-    public void setPlayers(List<UUID> players) {
-        this.players = players;
     }
 
     public GameState getState() {
@@ -58,27 +65,41 @@ public class Arena {
     }
 
     public void setState(GameState state) {
+        this.state = state;
         GameManager gameManager = new GameManager(plugin);
         gameManager.setGameState(this, state);
     }
 
-    private World world;
-    private List<UUID> players = new ArrayList<>();
-    private GameState state;
-
-    public Arena(String id, String mapName, World world){
-        this.id = id;
-        this.mapName = mapName;
-        this.world = world;
-        this.state = GameState.WAITING;
+    public void addPlayer(Player player) {
+        if (!getPlayers().contains(player.getUniqueId())) {
+            getPlayers().add(player.getUniqueId());
+        }
     }
 
-    public void broadcastArena(String msg){
-        players.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color(msg)));
+    public void removePlayer(Player player) {
+        getPlayers().remove(player.getUniqueId());
     }
 
-    public void titleArena(String title, String subtitle, int fadeIn, int stay, int fadeOut){
-        players.forEach(uuid -> ConfigUtils.sendTitle(Bukkit.getPlayer(uuid), title, subtitle, fadeIn, stay, fadeOut));
+    public void broadcastArena(String msg) {
+        String formattedMsg = ColorUtil.color(msg);
+        getPlayers().forEach(uuid -> {
+            Player p = Bukkit.getPlayer(uuid);
+            if (p != null) {
+                p.sendMessage(formattedMsg);
+            }
+        });
     }
 
+    public void titleArena(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+        getPlayers().forEach(uuid -> {
+            Player p = Bukkit.getPlayer(uuid);
+            if (p != null) {
+                ConfigUtils.sendTitle(p, title, subtitle, fadeIn, stay, fadeOut);
+            }
+        });
+    }
+
+    public boolean isFull(int maxPlayers) {
+        return getPlayers().size() >= maxPlayers;
+    }
 }
