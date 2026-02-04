@@ -54,7 +54,7 @@ public class ArcadePlayerManager {
                 for (UUID uuid : arena.getPlayers()){
 
                     Player target = Bukkit.getPlayer(uuid);
-                    ArcadePlayer arcadeTarget = (ArcadePlayer) target;
+                    ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), arena);
 
                     if (arcadeTarget.getState() == PlayerState.SPECTATOR){
                         p.showPlayer(p);
