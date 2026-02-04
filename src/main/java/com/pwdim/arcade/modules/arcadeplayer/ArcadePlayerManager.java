@@ -1,11 +1,18 @@
 package com.pwdim.arcade.modules.arcadeplayer;
 
 import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.arena.model.Arena;
+import com.pwdim.arcade.modules.lobby.LobbyItem;
 import com.pwdim.arcade.modules.player.PlayerState;
 import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
-import com.pwdim.arcade.utils.ColorUtil;
+import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.UUID;
 
 public class ArcadePlayerManager {
 
@@ -19,29 +26,44 @@ public class ArcadePlayerManager {
     public void setPlayerState(ArcadePlayer arcadePlayer, PlayerState playerState){
         arcadePlayer.setState(playerState);
         Player p = Bukkit.getPlayer(arcadePlayer.getUuid());
+        Arena arena = plugin.getArenaManager().getPlayerArena(p);
 
         switch (playerState){
             case WAITING:
-                plugin.logger("aguardando em" + plugin.getArenaManager().getPlayerArena(p).getId());
                 break;
             case DETECTIVE:
-                p.sendMessage(ColorUtil.color("&b&lDETETIVE"));
+                ConfigUtils.sendTitle(p, "&b&lDETETIVE", null, 20, 20, 20);
                 break;
             case INNOCENT:
-                p.sendMessage(ColorUtil.color("&a&lINOCENTE"));
+                ConfigUtils.sendTitle(p, "&a&lINOCENTE", null, 20, 20, 20);
                 break;
             case MURDERER:
-                p.sendMessage(ColorUtil.color("&c&lASSASSINO"));
+                ConfigUtils.sendTitle(p, "&c&lASSASSINO", null, 20, 20, 20);
                 break;
             case WINNER:
-                p.sendMessage(ColorUtil.color("&6&lVENCEDOR"));
+                ConfigUtils.sendTitle(p, "&c&lVITORIA!", null, 20, 20, 20);
+                LobbyItem.giveItem(p);
                 break;
             case SPECTATOR:
-                p.sendMessage(ColorUtil.color("&7&lESPECTADOR"));
-                break;
+                ConfigUtils.sendTitle(p, "&c&lVOCÊ MORREU!", null, 20, 20, 20);
+                p.setGameMode(GameMode.SURVIVAL);
+                p.setAllowFlight(true);
+                p.setFlying(true);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1, false, false));
+                LobbyItem.giveItem(p);
+                for (UUID uuid : arena.getPlayers()){
 
-            default:
-                setPlayerState(arcadePlayer, PlayerState.WAITING);
+                    Player target = Bukkit.getPlayer(uuid);
+                    ArcadePlayer arcadeTarget = (ArcadePlayer) target;
+
+                    if (arcadeTarget.getState() == PlayerState.SPECTATOR){
+                        p.showPlayer(p);
+                        target.showPlayer(p);
+                    } else {
+                        target.hidePlayer(p);
+                    }
+
+                }
                 break;
         }
     }

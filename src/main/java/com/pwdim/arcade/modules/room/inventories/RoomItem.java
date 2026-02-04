@@ -3,7 +3,9 @@ package com.pwdim.arcade.modules.room.inventories;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
+import com.pwdim.arcade.utils.GeneralUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -115,6 +117,82 @@ public class RoomItem {
 
         return item;
 
+    }
+
+    public ItemStack sendToLobby(){
+        ItemStack item = new ItemStack(Material.NETHER_STAR, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&a&lENVIAR PARA O LOBBY"));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public ItemStack killPlayer(){
+        ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&4&lELIMINAR JOGADOR"));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public ItemStack goToPlayer(){
+        ItemStack item = new ItemStack(Material.COMPASS, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ColorUtil.color("&d&lIR PARA O JOGADOR"));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public ItemStack deleteRoomItem(){
+        ItemStack item = new ItemStack(Material.BARRIER, 1);
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ColorUtil.color("&cCancelar partida e excluir mundo"));
+        meta.setLore(lore);
+        meta.setDisplayName(ColorUtil.color("&4&lREMOVER SALA"));
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public ItemStack playersRoomItem(Player p){
+        ItemStack item = GeneralUtils.getHead(p);
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ColorUtil.color("&eVerifique os jogadores da partida"));
+        meta.setLore(lore);
+        meta.setDisplayName(ColorUtil.color("&a&lLISTA DE JOGADORES"));
+        item.setItemMeta(meta);
+
+        return item;
+
+    }
+
+    public ItemStack confirmRemoveRoomItem(){
+        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 5);
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ColorUtil.color("&aRemover sala"));
+        meta.setLore(lore);
+        meta.setDisplayName(ColorUtil.color("&a&lCONFIRMAR"));
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public ItemStack cancelRemoveRoomItem(){
+        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 14);
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ColorUtil.color("&cNão remover sala"));
+        meta.setLore(lore);
+        meta.setDisplayName(ColorUtil.color("&c&lCANCELAR"));
+        item.setItemMeta(meta);
+
+        return item;
     }
 
 

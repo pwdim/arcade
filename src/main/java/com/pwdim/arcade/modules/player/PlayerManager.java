@@ -1,6 +1,7 @@
 package com.pwdim.arcade.modules.player;
 
 import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
 import com.pwdim.arcade.modules.lobby.LobbyItem;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.arena.ArenaManager;
@@ -97,12 +98,17 @@ public class PlayerManager {
         Bukkit.getScheduler().runTask(plugin, () -> {
             player.teleport(arena.getWorld().getSpawnLocation());
             arena.getPlayers().add(player.getUniqueId());
-            if (player.getCustomName() == null){
-                arena.broadcastArena("&7" + player.getName() + " &eentrou na partida (&b" + arena.getPlayers().size() + "&e/&b"+ConfigUtils.getMaxPLayers()+"&e)");
+            if (arena.getState() == GameState.WAITING || arena.getState() == GameState.STARTING){
+                if (player.getCustomName() == null){
+                    arena.broadcastArena("&7" + player.getName() + " &eentrou na partida (&b" + arena.getPlayers().size() + "&e/&b"+ConfigUtils.getMaxPLayers()+"&e)");
+                } else {
+                    String msg = ColorUtil.color("&7" + player.getCustomName() + " &eentrou na partida&e(&b" +
+                            arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
+                    arena.broadcastArena(msg);
+                }
             } else {
-                String msg = ColorUtil.color("&7" + player.getCustomName() + " &esaiu da partida&e(&b" +
-                        arena.getPlayers().size() + "&e/&b" + ConfigUtils.getMaxPLayers() + "&e)");
-                arena.broadcastArena(msg);
+                ArcadePlayer arcadePlayer = (ArcadePlayer) player;
+                plugin.getArcadePlayerManager().setPlayerState(arcadePlayer, PlayerState.SPECTATOR);
             }
             checkState(arena);
         });

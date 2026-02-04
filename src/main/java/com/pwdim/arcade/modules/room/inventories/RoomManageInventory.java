@@ -6,15 +6,11 @@ import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.GeneralUtils;
 import com.pwdim.arcade.utils.NMSUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class RoomManageInventory {
@@ -25,82 +21,36 @@ public class RoomManageInventory {
         this.plugin = plugin;
     }
 
+    private RoomItem roomItem(){
 
-    public ItemStack deleteRoomItem(){
-        ItemStack item = new ItemStack(Material.BARRIER, 1);
-        ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(ColorUtil.color("&cCancelar partida e excluir mundo"));
-        meta.setLore(lore);
-        meta.setDisplayName(ColorUtil.color("&4&lREMOVER SALA"));
-        item.setItemMeta(meta);
-
-        return item;
+        return plugin.getRoomManager().getRoomItem();
     }
-
-    public ItemStack playersRoomItem(Player p){
-        ItemStack item = GeneralUtils.getHead(p);
-        ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(ColorUtil.color("&eVerifique os jogadores da partida"));
-        meta.setLore(lore);
-        meta.setDisplayName(ColorUtil.color("&a&lLISTA DE JOGADORES"));
-        item.setItemMeta(meta);
-
-        return item;
-
-    }
-
-    public ItemStack confirmRemoveRoomItem(){
-        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 5);
-        ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(ColorUtil.color("&aRemover sala"));
-        meta.setLore(lore);
-        meta.setDisplayName(ColorUtil.color("&a&lCONFIRMAR"));
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    public ItemStack cancelRemoveRoomItem(){
-        ItemStack item = new ItemStack(Material.WOOL, 1, (short) 14);
-        ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(ColorUtil.color("&cNão remover sala"));
-        meta.setLore(lore);
-        meta.setDisplayName(ColorUtil.color("&c&lCANCELAR"));
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
 
     public Inventory deleteRoomInventory(Arena arena) {
         Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eRemover Sala? "));
 
         for (int i = 9; i < 18; i++) {
-            inv.setItem(i, plugin.getRoomManager().getRoomItem().fillItem());
+            inv.setItem(i, roomItem().fillItem());
         }
 
-        inv.setItem(4, plugin.getRoomManager().getRoomItem().roomItem(arena));
+        inv.setItem(4, roomItem().roomItem(arena));
 
-        ItemStack confirm = confirmRemoveRoomItem();
+        ItemStack confirm = roomItem().confirmRemoveRoomItem();
         confirm = NMSUtils.setCustomNBT(confirm, "manageArenaID", arena.getId());
-        confirm = NMSUtils.setCustomNBT(confirm, "action", "confirm_delete");
+        confirm = NMSUtils.setCustomNBT(confirm, "action", "ArenaDelete_Confirm");
 
-        ItemStack cancel = cancelRemoveRoomItem();
+        ItemStack cancel = roomItem().cancelRemoveRoomItem();
         cancel = NMSUtils.setCustomNBT(cancel, "manageArenaID", arena.getId());
-        cancel = NMSUtils.setCustomNBT(cancel, "action", "cancel_delete");
+        cancel = NMSUtils.setCustomNBT(cancel, "action", "ArenaDelete_Cancel");
 
-        ItemStack backItem = plugin.getRoomManager().getRoomItem().backItem();
+        ItemStack backItem = roomItem().backItem();
         backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
-        backItem = NMSUtils.setCustomNBT(backItem, "action", "back_delete");
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "ArenaDelete_Back");
         inv.setItem(36, backItem);
 
-        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        ItemStack reloadItem = roomItem().reloadItem();
         reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
-        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_delete");
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "ArenaDelete_Menu");
         inv.setItem(40, reloadItem);
 
         inv.setItem(21, cancel);
@@ -113,16 +63,16 @@ public class RoomManageInventory {
         Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eLista de Jogadores "));
 
         for (int i = 9; i < 18; i++) {
-            inv.setItem(i, plugin.getRoomManager().getRoomItem().fillItem());
+            inv.setItem(i, roomItem().fillItem());
         }
-        inv.setItem(4, plugin.getRoomManager().getRoomItem().roomItem(arena));
-        ItemStack backItem = plugin.getRoomManager().getRoomItem().backItem();
+        inv.setItem(4, roomItem().roomItem(arena));
+        ItemStack backItem = roomItem().backItem();
         backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
-        backItem = NMSUtils.setCustomNBT(backItem, "action", "back_playerlist");
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "PlayerList_Back");
         inv.setItem(36, backItem);
-        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        ItemStack reloadItem = roomItem().reloadItem();
         reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
-        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_playerlist");
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "PlayerList_Menu");
         inv.setItem(40, reloadItem);
 
 
@@ -134,54 +84,92 @@ public class RoomManageInventory {
                 ItemStack head = GeneralUtils.getHead(p);
                 head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
                 head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
-                head = NMSUtils.setCustomNBT(head,"action", "arena_players_manage");
+                head = NMSUtils.setCustomNBT(head,"action", "PlayerManager_Menu");
 
                 inv.setItem(i, head);
                 i++;
             }
         } else {
-            inv.setItem(31, plugin.getRoomManager().getRoomItem().nullItem());
+            inv.setItem(31, roomItem().nullItem());
         }
 
 
         return inv;
     }
 
+    public Inventory playerManageInventory(Player p){
+        Arena arena = plugin.getArenaManager().getPlayerArena(p);
+
+        Inventory inv = Bukkit.createInventory(null, 36, ColorUtil.color("&eGerenciar Jogador "));
+
+        ItemStack head = GeneralUtils.getHead(p);
+        head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
+        head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
+        head = NMSUtils.setCustomNBT(head,"action", "PlayerManager_Menu");
+        inv.setItem(4, head);
+
+        ItemStack backItem = roomItem().backItem();
+        backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "PlayerManager_Back");
+        inv.setItem(27, backItem);
+
+        ItemStack goToPlayer = roomItem().goToPlayer();
+        goToPlayer = NMSUtils.setCustomNBT(goToPlayer, "manageArenaID", arena.getId());
+        goToPlayer = NMSUtils.setCustomNBT(goToPlayer, "action", "PlayerManager_GoTo");
+        inv.setItem(22, goToPlayer);
+
+        ItemStack killPlayer = roomItem().killPlayer();
+        killPlayer = NMSUtils.setCustomNBT(killPlayer, "manageArenaID", arena.getId());
+        killPlayer = NMSUtils.setCustomNBT(killPlayer, "action", "PlayerManager_Kill");
+        inv.setItem(21, killPlayer);
+
+        ItemStack sendLobby = roomItem().sendToLobby();
+        sendLobby = NMSUtils.setCustomNBT(sendLobby, "manageArenaID", arena.getId());
+        sendLobby = NMSUtils.setCustomNBT(sendLobby, "action", "PlayerManager_SendLobby");
+        inv.setItem(23, sendLobby);
+
+
+
+
+        return inv;
+
+    }
+
     public Inventory manageInventory(Arena arena, @Nullable Player p){
         Inventory inv = Bukkit.createInventory(null, 45, ColorUtil.color("&eGerenciar Sala"));
 
         for (int i = 9; i < 18; i++) {
-            inv.setItem(i, plugin.getRoomManager().getRoomItem().fillItem());
+            inv.setItem(i, roomItem().fillItem());
         }
 
-        inv.setItem(4, plugin.getRoomManager().getRoomItem().roomItem(arena));
+        inv.setItem(4, roomItem().roomItem(arena));
 
-        ItemStack delete = deleteRoomItem();
+        ItemStack delete = roomItem().deleteRoomItem();
         delete = NMSUtils.setCustomNBT(delete, "manageArenaID", arena.getId());
-        delete = NMSUtils.setCustomNBT(delete,"action", "arena_delete");
+        delete = NMSUtils.setCustomNBT(delete,"action", "ArenaDelete_Menu");
 
-        ItemStack backItem = plugin.getRoomManager().getRoomItem().backItem();
+        ItemStack backItem = roomItem().backItem();
         backItem = NMSUtils.setCustomNBT(backItem, "manageArenaID", arena.getId());
-        backItem = NMSUtils.setCustomNBT(backItem, "action", "back_manage");
+        backItem = NMSUtils.setCustomNBT(backItem, "action", "Arenas_Menu");
         inv.setItem(36, backItem);
 
-        ItemStack reloadItem = plugin.getRoomManager().getRoomItem().reloadItem();
+        ItemStack reloadItem = roomItem().reloadItem();
         reloadItem = NMSUtils.setCustomNBT(reloadItem, "manageArenaID", arena.getId());
-        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "reload_manage");
+        reloadItem = NMSUtils.setCustomNBT(reloadItem, "action", "ArenaDelete_Menu");
         inv.setItem(40, reloadItem);
 
         if (p == null){
             Player player = Bukkit.getPlayer(UUID.fromString("b842a9d2-9548-434b-8a09-4ad3ecca119b"));
-            ItemStack list = playersRoomItem(player);
+            ItemStack list = roomItem().playersRoomItem(player);
             list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
-            list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+            list = NMSUtils.setCustomNBT(list, "action", "PlayerList_Menu");
 
             inv.setItem(30, list);
 
         } else {
-            ItemStack list = playersRoomItem(p);
+            ItemStack list = roomItem().playersRoomItem(p);
             list = NMSUtils.setCustomNBT(list, "manageArenaID", arena.getId());
-            list = NMSUtils.setCustomNBT(list, "action", "arena_players");
+            list = NMSUtils.setCustomNBT(list, "action", "PlayerList_Menu");
             inv.setItem(30, list);
         }
 

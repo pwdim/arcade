@@ -52,12 +52,26 @@ public class RoomListener implements Listener {
 
 
         String action = NMSUtils.getCustomNBT(item, "action");
+
+        /*
+
+        ex:
+        ArenaDelete_Confirm
+        ArenaDelete_Cancel
+        PlayerManager_menu
+        PlayerManager_kill
+        PlayerManager_confirm
+        PlayerManager_goTo
+
+         */
         if (action != null) {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
             Arena arena = plugin.getArenaManager().getArena(manageArenaID);
+            String managePlayerUUID = NMSUtils.getCustomNBT(item, "managePlayer");
+            Player target = Bukkit.getPlayer(managePlayerUUID);
 
             switch (action) {
-                case "confirm_delete":
+                case "ArenaDelete_Confirm":
                     plugin.getArenaManager().getArena(manageArenaID).getPlayers().forEach(
                             uuid -> Bukkit.getPlayer(uuid).sendMessage(ColorUtil.color("&cA sala que você estava está reiniciando!")));
                     plugin.getArenaManager().finishArena(manageArenaID);
@@ -65,44 +79,49 @@ public class RoomListener implements Listener {
                     player.sendMessage(ColorUtil.color("&bArena &c" + manageArenaID + " &bfinalizada com sucesso"));
                     player.playSound(player.getLocation(), Sound.ANVIL_USE, 2, player.getLocation().getPitch());
                     break;
-                case "cancel_delete":
+                case "ArenaDelete_Cancel":
                     player.playSound(player.getLocation(), Sound.STEP_STONE, 2, player.getLocation().getPitch());
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
                     break;
-                case "arena_delete":
-                    player.openInventory(plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(plugin.getArenaManager().getArena(manageArenaID)));
+                case "ArenaDelete_Menu":
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(arena)
+                    );
                     break;
-                case "arena_players":
-                case "reload_playerlist":
+                case "PlayerList_Menu":
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     break;
-                case "arena_players_manage":
-
-                    break;
-                case "back_delete":
-                case "back_playerlist":
-                case "reload_manage":
+                case "ArenaDelete_Back":
+                case "PlayerList_Back":
+                case "ArenaManager_Menu":
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
 
                     break;
-                case "back_manage":
+                case "ArenaManager_Back":
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(extractPage(title))
                     );
                     break;
-                case "reload_delete":
-                    player.openInventory(
-                            plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(arena)
-                    );
-                    break;
-                case "reload_menu":
+                case "Arenas_Menu":
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(0)
                     );
+                    break;
+
+                case "PlayerManager_Menu":
+                    player.openInventory(
+                            plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target)
+                    );
+                    break;
+                case "PlayerManager_GoTo":
+                    plugin.getPlayerManager().sendToArena(
+                            player
+                    );
+                    player.teleport(target.getLocation());
                     break;
             }
         }
