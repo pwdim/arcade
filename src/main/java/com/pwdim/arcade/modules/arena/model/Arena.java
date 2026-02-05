@@ -1,7 +1,6 @@
 package com.pwdim.arcade.modules.arena.model;
 
 import com.pwdim.arcade.core.Arcade;
-import com.pwdim.arcade.modules.game.GameManager;
 import com.pwdim.arcade.modules.game.GameState;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
@@ -66,8 +65,7 @@ public class Arena {
 
     public void setState(GameState state) {
         this.state = state;
-        GameManager gameManager = new GameManager(plugin);
-        gameManager.setGameState(this, state);
+        plugin.getGameManager().setGameState(this, state);
     }
 
     public void addPlayer(Player player) {
