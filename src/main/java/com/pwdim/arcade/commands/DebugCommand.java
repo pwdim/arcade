@@ -33,7 +33,7 @@ public class DebugCommand implements CommandExecutor {
         ArcadePlayer arcadePlayer = new ArcadePlayer(p.getUniqueId(), plugin.getArenaManager().getPlayerArena(p));
 
         if (args.length == 0){
-            p.sendMessage(arcadePlayer.getState().toString());
+            p.sendMessage(ColorUtil.color("&b&lDEBUG: &9" + arcadePlayer.getState().toString()));
             return true;
         }
 

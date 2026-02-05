@@ -2,6 +2,7 @@ name: Arcade
 version: '${version}'
 main: com.pwdim.arcade.core.Arcade
 description: §bMinigame Arcade
+author: pwdim
 depend:
   - SlimeWorldManager
 commands:

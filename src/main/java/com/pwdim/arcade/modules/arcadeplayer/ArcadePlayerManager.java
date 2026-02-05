@@ -43,7 +43,7 @@ public class ArcadePlayerManager {
                 ConfigUtils.sendTitle(p, "&c&lASSASSINO", null, 20, 20, 20);
                 break;
             case WINNER:
-                ConfigUtils.sendTitle(p, "&c&lVITORIA!", null, 20, 20, 20);
+                ConfigUtils.sendTitle(p, "&b&lVITORIA!", null, 20, 20, 20);
                 LobbyItem.giveItem(p);
                 break;
             case SPECTATOR:
@@ -53,16 +53,18 @@ public class ArcadePlayerManager {
                 p.setFlying(true);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1, false, false));
                 LobbyItem.giveItem(p);
-                for (UUID uuid : arena.getPlayers()){
+                for (UUID uuid :    arena.getPlayers()){
 
-                    Player target = Bukkit.getPlayer(uuid);
-                    ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), arena);
+                    if (!arena.getPlayers().isEmpty()){
+                        Player target = Bukkit.getPlayer(uuid);
+                        ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), arena);
 
-                    if (arcadeTarget.getState() == PlayerState.SPECTATOR){
-                        p.showPlayer(p);
-                        target.showPlayer(p);
-                    } else {
-                        target.hidePlayer(p);
+                        if (arcadeTarget.getState() == PlayerState.SPECTATOR){
+                            p.showPlayer(p);
+                            target.showPlayer(p);
+                        } else {
+                            target.hidePlayer(p);
+                        }
                     }
 
                 }

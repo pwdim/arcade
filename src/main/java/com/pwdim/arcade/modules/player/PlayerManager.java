@@ -58,17 +58,6 @@ public class PlayerManager {
         Arena arena = plugin.getArenaManager().getPlayerArena(player);
         ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), arena);
 
-        if (arcadePlayer.getState() == PlayerState.SPECTATOR){
-            player.removePotionEffect(PotionEffectType.INVISIBILITY);
-            for (UUID uuid : arena.getPlayers()){
-                Player target = Bukkit.getPlayer(uuid);
-
-                target.showPlayer(player);
-                player.showPlayer(target);
-            }
-        }
-
-
         if (arena == null) {
             if (player.isOnline()){
                 player.teleport(ConfigUtils.getLobby());
@@ -78,6 +67,16 @@ public class PlayerManager {
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
+            if (arcadePlayer.getState() == PlayerState.SPECTATOR){
+                player.removePotionEffect(PotionEffectType.INVISIBILITY);
+                for (UUID uuid : arena.getPlayers()){
+                    Player target = Bukkit.getPlayer(uuid);
+
+                    target.showPlayer(player);
+                    player.showPlayer(target);
+                }
+            }
+
             arena.getPlayers().remove(player.getUniqueId());
             LobbyItem.removeItem(player);
             if (player.isOnline()){
