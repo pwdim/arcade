@@ -1,7 +1,9 @@
 package com.pwdim.arcade.modules.room.listeners;
 
 import com.pwdim.arcade.core.Arcade;
+import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
 import com.pwdim.arcade.modules.arena.model.Arena;
+import com.pwdim.arcade.modules.player.PlayerState;
 import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.NMSUtils;
 import org.bukkit.*;
@@ -141,7 +143,7 @@ public class RoomListener implements Listener {
                     if (target != null) {
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target));
                     } else {
-                        player.sendMessage(ColorUtil.color("&cEste jogador não está mais online."));
+                        player.sendMessage(ColorUtil.color("&cJogador não encontrado."));
                         player.closeInventory();
                     }
                     break;
@@ -151,13 +153,15 @@ public class RoomListener implements Listener {
                         player.teleport(target.getLocation());
                         player.sendMessage(ColorUtil.color("&aTeleportado para " + target.getName()));
                     } else {
-                        player.sendMessage(ColorUtil.color("&cEste jogador não está mais online."));
+                        player.sendMessage(ColorUtil.color("&cJogador não encontrado."));
                     }
                     break;
 
                 case "PlayerManager_Kill":
                     if (target != null) {
-                        target.setHealth(0);
+                        ArcadePlayer arcadeTarget;
+                        arcadeTarget = new ArcadePlayer(target.getUniqueId(), plugin.getArenaManager().getPlayerArena(target));
+                        arcadeTarget.setState(PlayerState.SPECTATOR);
                         player.sendMessage(ColorUtil.color("&cJogador eliminado."));
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     }
@@ -169,7 +173,7 @@ public class RoomListener implements Listener {
                         player.sendMessage(ColorUtil.color("&aJogador enviado ao lobby."));
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     } else {
-                        player.sendMessage(ColorUtil.color("&cEste jogador não está mais online."));
+                        player.sendMessage(ColorUtil.color("&cJogador não encontrado."));
                     }
                     break;
 

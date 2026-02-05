@@ -106,6 +106,7 @@ public class RoomManageInventory {
         Inventory inv = Bukkit.createInventory(null, 36, ColorUtil.color("&eGerenciar Jogador "));
 
         ItemStack head = GeneralUtils.getHead(p);
+        head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
         head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
         inv.setItem(4, head);
 
@@ -115,16 +116,19 @@ public class RoomManageInventory {
         inv.setItem(27, backItem);
 
         ItemStack goToPlayer = roomItem().goToPlayer();
+        goToPlayer = NMSUtils.setCustomNBT(goToPlayer, "managePlayer", p.getUniqueId().toString());
         goToPlayer = NMSUtils.setCustomNBT(goToPlayer, "manageArenaID", arena.getId());
         goToPlayer = NMSUtils.setCustomNBT(goToPlayer, "action", "PlayerManager_GoTo");
         inv.setItem(22, goToPlayer);
 
         ItemStack killPlayer = roomItem().killPlayer();
+        killPlayer = NMSUtils.setCustomNBT(killPlayer, "managePlayer", p.getUniqueId().toString());
         killPlayer = NMSUtils.setCustomNBT(killPlayer, "manageArenaID", arena.getId());
         killPlayer = NMSUtils.setCustomNBT(killPlayer, "action", "PlayerManager_Kill");
         inv.setItem(21, killPlayer);
 
         ItemStack sendLobby = roomItem().sendToLobby();
+        sendLobby = NMSUtils.setCustomNBT(sendLobby, "managePlayer", p.getUniqueId().toString());
         sendLobby = NMSUtils.setCustomNBT(sendLobby, "manageArenaID", arena.getId());
         sendLobby = NMSUtils.setCustomNBT(sendLobby, "action", "PlayerManager_SendLobby");
         inv.setItem(23, sendLobby);
