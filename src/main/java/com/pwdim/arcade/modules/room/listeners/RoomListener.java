@@ -164,6 +164,7 @@ public class RoomListener implements Listener {
                     if (target != null) {
                         ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), plugin.getArenaManager().getPlayerArena(target));
                         arcadeTarget.setState(PlayerState.SPECTATOR);
+                        player.sendMessage(ColorUtil.color("&7" + target.getName() + " &bdefinido como &d" + arcadeTarget.getState()));
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     }
                     break;
