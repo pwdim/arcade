@@ -1,20 +1,17 @@
-package com.pwdim.arcade.modules.lobby;
+package com.pwdim.arcade.modules.coreitems.item;
 
 
 import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.utils.ColorUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LobbyItem implements Listener {
+public class LobbyItem {
 
     public static Arcade plugin;
 
@@ -41,19 +38,6 @@ public class LobbyItem implements Listener {
     public static void removeItem(Player p){
         if (p.getInventory().contains(lobbyItem())){
             p.getInventory().removeItem(lobbyItem());
-        }
-    }
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent e){
-        Player p = e.getPlayer();
-        ItemStack item = e.getPlayer().getItemInHand();
-
-        if (item.getType() == Material.BED){
-            if (item.getItemMeta().equals(lobbyItem().getItemMeta())) {
-                plugin.getPlayerManager().sendToLobby(p);
-            }
-
         }
     }
 }

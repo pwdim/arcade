@@ -2,7 +2,7 @@ package com.pwdim.arcade.modules.player;
 
 import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
-import com.pwdim.arcade.modules.lobby.LobbyItem;
+import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.arena.ArenaManager;
 import com.pwdim.arcade.modules.game.GameManager;
@@ -11,11 +11,9 @@ import com.pwdim.arcade.utils.ColorUtil;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
 
 
 import java.util.Comparator;
-import java.util.UUID;
 
 
 public class PlayerManager {
@@ -136,7 +134,7 @@ public class PlayerManager {
             plugin.getGameManager().setGameState(arena, GameState.STARTING);
         }
 
-        if ((arena.getState() == GameState.PLAYING) && (playersIn == 1)){
+        if ((arena.getState() == GameState.PLAYING) && (playersIn <= 1)){
            arena.setState(GameState.ENDING);
         }
     }

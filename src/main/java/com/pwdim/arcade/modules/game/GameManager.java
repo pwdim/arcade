@@ -2,7 +2,7 @@ package com.pwdim.arcade.modules.game;
 
 
 import com.pwdim.arcade.core.Arcade;
-import com.pwdim.arcade.modules.lobby.LobbyItem;
+import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.blocks.BlockManager;
 import com.pwdim.arcade.modules.game.tasks.GameStartCountdownTask;

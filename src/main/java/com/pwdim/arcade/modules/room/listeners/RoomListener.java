@@ -72,13 +72,15 @@ public class RoomListener implements Listener {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
             Arena arena = plugin.getArenaManager().getArena(manageArenaID);
 
-            String managePlayerUUIDStr = NMSUtils.getCustomNBT(item, "managePlayer");
+            String managePlayerUUID = NMSUtils.getCustomNBT(item, "managePlayer");
             Player target = null;
+            Arena targetArena = null;
 
-            if (managePlayerUUIDStr != null && !managePlayerUUIDStr.isEmpty()) {
+            if (managePlayerUUID != null && !managePlayerUUID.isEmpty()) {
                 try {
-                    UUID uuid = UUID.fromString(managePlayerUUIDStr);
+                    UUID uuid = UUID.fromString(managePlayerUUID);
                     target = Bukkit.getPlayer(uuid);
+                    targetArena = plugin.getArenaManager().getPlayerArena(target);
                 } catch (IllegalArgumentException ex) {
                     plugin.logger("&4&lERROR &c" + ex.getMessage());
                 }
@@ -151,7 +153,8 @@ public class RoomListener implements Listener {
                 case "PlayerManager_GoTo":
                     if (target != null) {
                         player.teleport(target.getLocation());
-                        player.sendMessage(ColorUtil.color("&aTeleportado para " + target.getName()));
+                        assert targetArena != null;
+                        player.sendMessage(ColorUtil.color("&a&oConectando para &7" + target.getCustomName()));
                     } else {
                         player.sendMessage(ColorUtil.color("&cJogador não encontrado."));
                     }
@@ -162,7 +165,6 @@ public class RoomListener implements Listener {
                         ArcadePlayer arcadeTarget;
                         arcadeTarget = new ArcadePlayer(target.getUniqueId(), plugin.getArenaManager().getPlayerArena(target));
                         arcadeTarget.setState(PlayerState.SPECTATOR);
-                        player.sendMessage(ColorUtil.color("&cJogador eliminado."));
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     }
                     break;

@@ -1,7 +1,7 @@
 package com.pwdim.arcade.commands;
 
 import com.pwdim.arcade.core.Arcade;
-import com.pwdim.arcade.modules.lobby.LobbyItem;
+import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
 import com.pwdim.arcade.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
