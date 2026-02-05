@@ -11,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class RoomListener implements Listener {
 
     private final Arcade plugin;
@@ -67,8 +69,18 @@ public class RoomListener implements Listener {
         if (action != null) {
             String manageArenaID = NMSUtils.getCustomNBT(item, "manageArenaID");
             Arena arena = plugin.getArenaManager().getArena(manageArenaID);
-            String managePlayerUUID = NMSUtils.getCustomNBT(item, "managePlayer");
-            Player target = Bukkit.getPlayer(managePlayerUUID);
+
+            String managePlayerUUIDStr = NMSUtils.getCustomNBT(item, "managePlayer");
+            Player target = null;
+
+            if (managePlayerUUIDStr != null && !managePlayerUUIDStr.isEmpty()) {
+                try {
+                    UUID uuid = UUID.fromString(managePlayerUUIDStr);
+                    target = Bukkit.getPlayer(uuid);
+                } catch (IllegalArgumentException ex) {
+                    plugin.logger("&4&lERROR &c" + ex.getMessage());
+                }
+            }
 
             switch (action) {
                 case "ArenaDelete_Confirm":
@@ -126,22 +138,37 @@ public class RoomListener implements Listener {
 
 
                 case "PlayerManager_Menu":
-                    if (target != null){
-                        player.openInventory(
-                                plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target)
-                        );
+                    if (target != null) {
+                        player.openInventory(plugin.getRoomManager().getRoomManageInventory().playerManageInventory(target));
                     } else {
+                        player.sendMessage(ColorUtil.color("&cEste jogador não está mais online."));
                         player.closeInventory();
-                        player.sendMessage(ColorUtil.color("&4&lERROR"));
                     }
                     break;
 
-
                 case "PlayerManager_GoTo":
-                    plugin.getPlayerManager().sendToArena(
-                            player
-                    );
-                    player.teleport(target.getLocation());
+                    if (target != null) {
+                        player.teleport(target.getLocation());
+                        player.sendMessage(ColorUtil.color("&aTeleportado para " + target.getName()));
+                    } else {
+                        player.sendMessage(ColorUtil.color("&cJogador offline."));
+                    }
+                    break;
+
+                case "PlayerManager_Kill":
+                    if (target != null) {
+                        target.setHealth(0);
+                        player.sendMessage(ColorUtil.color("&cJogador eliminado."));
+                        player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
+                    }
+                    break;
+
+                case "PlayerManager_SendLobby":
+                    if (target != null) {
+                        plugin.getPlayerManager().sendToLobby(target);
+                        player.sendMessage(ColorUtil.color("&aJogador enviado ao lobby."));
+                        player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
+                    }
                     break;
 
 
