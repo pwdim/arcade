@@ -5,6 +5,7 @@ import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.blocks.BlockManager;
+import com.pwdim.arcade.modules.coreitems.item.PlayAgainItem;
 import com.pwdim.arcade.modules.game.tasks.GameStartCountdownTask;
 import com.pwdim.arcade.modules.player.PlayerManager;
 import org.bukkit.Bukkit;
@@ -46,11 +47,14 @@ public class GameManager {
             case ENDING:
                 arena.titleArena("&c&lFIM DE JOGO!", "&eObrigado por jogar!", 1, 1000, 300);
                 arena.getPlayers().forEach(uuid -> LobbyItem.giveItem(Bukkit.getPlayer(uuid)));
+                arena.getPlayers().forEach(uuid -> PlayAgainItem.giveItem(Bukkit.getPlayer(uuid)));
 
                 Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.getGameManager().setGameState(arena, GameState.RESTARTING), 20L*15);
                 break;
             case RESTARTING:
                 arena.getPlayers().forEach(uuid -> LobbyItem.removeItem(Bukkit.getPlayer(uuid)));
+                arena.getPlayers().forEach(uuid -> PlayAgainItem.removeItem(Bukkit.getPlayer(uuid)));
+
                 plugin.getArenaManager().finishArena(arena.getId());
                 break;
             default:

@@ -31,7 +31,7 @@ public class PlayAgainItem {
     }
 
     public static void giveItem(Player p){
-        p.getInventory().setItem(8, playAgainItem());
+        p.getInventory().setItem(7, playAgainItem());
     }
 
     public static void removeItem(Player p){

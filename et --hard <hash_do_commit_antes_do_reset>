@@ -1,0 +1,94 @@
+[33mbe58a54[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{0}: reset: moving to HEAD~2
+[33md0ce683[m HEAD@{1}: commit (amend): Adicionado: -Implementado item de jogar novamente;Atualizado: -Refatorando LobbyItem para incluir mais itens -Atualizando pequenas mensagens do RoomListener -Verificações extras no RoomListener.onClick - PlayerManager.checkState agora verifica se não existe ninguém na partida e encerra
+[33m51adafd[m HEAD@{2}: commit: Adicionado: -Implementado item de jogar novamente;Atualizado: -Refatorando LobbyItem para incluir mais itens -Atualizando pequenas mensagens do RoomListener -Verificações extras no RoomListener.onClick - PlayerManager.checkState agora verifica se não existe ninguém na partida e encerra
+[33m27505f4[m HEAD@{3}: commit: Adicionado: -Implementado item de jogar novamente;Atualizado: -Refatorando LobbyItem para incluir mais itens -Atualizando pequenas mensagens do RoomListener -Verificações extras no RoomListener.onClick - PlayerManager.checkState agora verifica se não existe ninguém na partida e encerra
+[33mbe58a54[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{4}: commit: Corrigido: Correção nas funções do RoomManageInventory.playerManageInventory
+[33mcdb4daa[m HEAD@{5}: rebase: checkout master
+[33mcdb4daa[m HEAD@{6}: rebase: checkout master
+[33mcdb4daa[m HEAD@{7}: commit (amend): Merge: RoomListener.java
+[33maffe680[m HEAD@{8}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33md9a2261[m HEAD@{9}: commit (amend): Corrigido: Correção de NullExpection no target do RoomListener.onClick
+[33m6bcf3f0[m HEAD@{10}: commit: Corrigido:
+[33m969670b[m HEAD@{11}: commit: Atualizado:
+[33m965766b[m HEAD@{12}: commit: Corrigido:
+[33mb5565fa[m HEAD@{13}: commit: Adicionado:
+[33m252e0dd[m HEAD@{14}: commit: Corrigido:
+[33m8451ba7[m HEAD@{15}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33m30ccf2d[m HEAD@{16}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33md3e73a2[m HEAD@{17}: commit (amend): Corrigido:
+[33m96ba402[m HEAD@{18}: commit: Corrigido:
+[33m96ffb12[m HEAD@{19}: commit: Atualizado:
+[33mde5aa70[m HEAD@{20}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33m66bc86b[m HEAD@{21}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33mee7de76[m HEAD@{22}: commit (amend): Corrigido:
+[33m5a2c9a8[m HEAD@{23}: commit: Corrigido:
+[33md792644[m HEAD@{24}: commit: Corrigido:
+[33m3bb771e[m HEAD@{25}: commit: Atualizado:
+[33mc6ab47f[m HEAD@{26}: commit: Corrigido:
+[33m12da22c[m HEAD@{27}: merge origin/master: Merge made by the 'ort' strategy.
+[33m487306a[m HEAD@{28}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33m2863e9f[m HEAD@{29}: merge origin/master: Merge made by the 'ort' strategy.
+[33m6197977[m HEAD@{30}: commit (amend): Atualizado:
+[33m685ccba[m HEAD@{31}: commit (amend): Atualizado:
+[33m793a2fd[m HEAD@{32}: commit: Atualizado:
+[33m311e618[m HEAD@{33}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33mf78248e[m HEAD@{34}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m6ac5e5a[m HEAD@{35}: commit (amend): Corrigido:
+[33m54a7406[m HEAD@{36}: commit: Corrigido:
+[33m5e74613[m HEAD@{37}: commit: Corrigido:
+[33m4ac50dc[m HEAD@{38}: commit: Corrigido:
+[33m276fbf0[m HEAD@{39}: commit: Adicionado:
+[33m0fd1fe8[m HEAD@{40}: commit: Corrigido:
+[33m523e87c[m HEAD@{41}: commit: Atualizado:
+[33m48c86ad[m HEAD@{42}: commit: Corrigido:
+[33m567223a[m HEAD@{43}: commit: Adicionado:
+[33mf0d0571[m HEAD@{44}: commit: Corrigido:
+[33mc04232d[m HEAD@{45}: commit: Corrigido:
+[33mdace880[m HEAD@{46}: commit: Corrigido:
+[33m31d3915[m HEAD@{47}: commit: Atualizado:
+[33m807e83a[m HEAD@{48}: commit: Atualizado:
+[33mf359070[m HEAD@{49}: commit: Corrigido:
+[33m1da9c9f[m HEAD@{50}: merge origin/master: Merge made by the 'ort' strategy.
+[33m4d1a5b1[m HEAD@{51}: commit (amend): Corrigido:
+[33m0a37b0e[m HEAD@{52}: commit: Corrigido:
+[33m702d216[m HEAD@{53}: commit: Adicionado:
+[33mbbb1c0d[m HEAD@{54}: commit: Atualizado:
+[33me578242[m HEAD@{55}: commit: Corrigido:
+[33m77ad6bf[m HEAD@{56}: commit: Atualizado:
+[33m28ee306[m HEAD@{57}: commit: Adicionado:
+[33md85a9dd[m HEAD@{58}: merge origin/master: Merge made by the 'ort' strategy.
+[33mc5b50aa[m HEAD@{59}: commit: Adicionado:
+[33m33b33e1[m HEAD@{60}: commit: Update:
+[33mdbf3517[m HEAD@{61}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33md70780c[m HEAD@{62}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m291992e[m HEAD@{63}: commit (amend): Adicionado:
+[33mb0c82f7[m HEAD@{64}: commit: Adicionado:
+[33mda8d012[m HEAD@{65}: merge origin/master: Merge made by the 'ort' strategy.
+[33m5fd1510[m HEAD@{66}: commit (amend): Adicionado:
+[33me15a07e[m HEAD@{67}: commit: Adicionado:
+[33m884d034[m HEAD@{68}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33m95b6f91[m HEAD@{69}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m509c029[m HEAD@{70}: commit (amend): Corrigido:
+[33m0eaae4e[m HEAD@{71}: commit: Corrigido:
+[33mfd10ff6[m HEAD@{72}: commit: Corrigido:
+[33m3da40d8[m HEAD@{73}: commit: Corrigido:
+[33m99bf7ae[m HEAD@{74}: commit (amend): Corrigido:
+[33mf5f47c7[m HEAD@{75}: commit: Corrigido:
+[33m7bd83c9[m HEAD@{76}: commit: Corrigido:
+[33m859b7c9[m HEAD@{77}: merge origin/master: Merge made by the 'ort' strategy.
+[33m504daa7[m HEAD@{78}: commit (amend): Corrigido:
+[33m84c9f0e[m HEAD@{79}: commit: Corrigido:
+[33m7c57a4a[m HEAD@{80}: commit: Atualização:
+[33m3595b9c[m HEAD@{81}: commit: Corrigido:
+[33m1c20c54[m HEAD@{82}: merge origin/master: Merge made by the 'ort' strategy.
+[33mf595634[m HEAD@{83}: commit (amend): Corrigido:
+[33m0bbf6dc[m HEAD@{84}: commit: Corrigido:
+[33mda3ab93[m HEAD@{85}: commit: Corrigido:
+[33m7ffcd76[m HEAD@{86}: merge origin/master: Merge made by the 'ort' strategy.
+[33m77f6898[m HEAD@{87}: commit (amend): Update:
+[33m9ee55ae[m HEAD@{88}: commit: Corrigido:
+[33m39cf658[m HEAD@{89}: commit: Corrigido:
+[33m3867146[m HEAD@{90}: commit: Corrigido:
+[33m852b2dd[m HEAD@{91}: commit (amend): Merge remote-tracking branch 'origin/master'
+[33m0200caa[m HEAD@{92}: commit (merge): Merge remote-tracking branch 'origin/master'
+[33m4890cc2[m HEAD@{93}: commit (amend): Corrigido:

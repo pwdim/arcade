@@ -3,6 +3,7 @@ package com.pwdim.arcade.modules.arcadeplayer;
 import com.pwdim.arcade.core.Arcade;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
+import com.pwdim.arcade.modules.coreitems.item.PlayAgainItem;
 import com.pwdim.arcade.modules.player.PlayerState;
 import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
 import com.pwdim.arcade.utils.ConfigUtils;
@@ -32,6 +33,7 @@ public class ArcadePlayerManager {
             case LOBBY:
                 p.removePotionEffect(PotionEffectType.INVISIBILITY);
                 LobbyItem.removeItem(p);
+                PlayAgainItem.removeItem(p);
 
                 for (UUID uuid :    arena.getPlayers()){
 
@@ -64,6 +66,7 @@ public class ArcadePlayerManager {
             case WINNER:
                 ConfigUtils.sendTitle(p, "&b&lVITORIA!", null, 20, 20, 20);
                 LobbyItem.giveItem(p);
+                PlayAgainItem.giveItem(p);
                 break;
             case SPECTATOR:
                 ConfigUtils.sendTitle(p, "&c&lVOCÊ MORREU!", null, 20, 20, 20);
@@ -72,6 +75,7 @@ public class ArcadePlayerManager {
                 p.setFlying(true);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1, false, false));
                 LobbyItem.giveItem(p);
+                PlayAgainItem.giveItem(p);
                 for (UUID uuid :    arena.getPlayers()){
 
                     if (!arena.getPlayers().isEmpty()){

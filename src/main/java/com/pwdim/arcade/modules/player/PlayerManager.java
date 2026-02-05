@@ -5,6 +5,7 @@ import com.pwdim.arcade.modules.arcadeplayer.model.ArcadePlayer;
 import com.pwdim.arcade.modules.coreitems.item.LobbyItem;
 import com.pwdim.arcade.modules.arena.model.Arena;
 import com.pwdim.arcade.modules.arena.ArenaManager;
+import com.pwdim.arcade.modules.coreitems.item.PlayAgainItem;
 import com.pwdim.arcade.modules.game.GameManager;
 import com.pwdim.arcade.modules.game.GameState;
 import com.pwdim.arcade.utils.ColorUtil;
@@ -72,6 +73,7 @@ public class PlayerManager {
 
             arena.getPlayers().remove(player.getUniqueId());
             LobbyItem.removeItem(player);
+            PlayAgainItem.removeItem(player);
             if (player.isOnline()){
                 player.teleport(ConfigUtils.getLobby());
             }
