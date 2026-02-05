@@ -81,13 +81,16 @@ public class RoomManageInventory {
         if (!(arena.getPlayers().isEmpty())){
             for (UUID uuid : arena.getPlayers()){
                 Player p = Bukkit.getPlayer(uuid);
-                ItemStack head = GeneralUtils.getHead(p);
-                head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
-                head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
-                head = NMSUtils.setCustomNBT(head,"action", "PlayerManager_Menu");
+                if (p != null) {
+                    ItemStack head = GeneralUtils.getHead(p);
 
-                inv.setItem(i, head);
-                i++;
+                    head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
+                    head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
+                    head = NMSUtils.setCustomNBT(head,"action", "PlayerManager_Menu");
+
+                    inv.setItem(i, head);
+                    i++;
+                }
             }
         } else {
             inv.setItem(31, roomItem().nullItem());
@@ -103,7 +106,6 @@ public class RoomManageInventory {
         Inventory inv = Bukkit.createInventory(null, 36, ColorUtil.color("&eGerenciar Jogador "));
 
         ItemStack head = GeneralUtils.getHead(p);
-        head = NMSUtils.setCustomNBT(head, "manageArenaID", arena.getId());
         head = NMSUtils.setCustomNBT(head, "managePlayer", p.getUniqueId().toString());
         inv.setItem(4, head);
 
