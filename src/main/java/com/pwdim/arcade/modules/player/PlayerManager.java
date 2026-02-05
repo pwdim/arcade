@@ -40,6 +40,8 @@ public class PlayerManager {
 
         player.sendMessage(ColorUtil.color("&aConectando..."));
         if (bestArena != null) {
+            ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), bestArena);
+            arcadePlayer.setState(PlayerState.WAITING);
             teleportToArena(player, bestArena);
             LobbyItem.giveItem(player);
             checkState(bestArena);
@@ -50,6 +52,8 @@ public class PlayerManager {
                 teleportToArena(player, newArena);
                 LobbyItem.giveItem(player);
                 checkState(newArena);
+                ArcadePlayer arcadePlayer = new ArcadePlayer(player.getUniqueId(), newArena);
+                arcadePlayer.setState(PlayerState.WAITING);
             });
         }
     }
@@ -62,20 +66,11 @@ public class PlayerManager {
             if (player.isOnline()){
                 player.teleport(ConfigUtils.getLobby());
             }
-            LobbyItem.removeItem(player);
+            player.getInventory().clear();
             return;
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
-            if (arcadePlayer.getState() == PlayerState.SPECTATOR){
-                player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                for (UUID uuid : arena.getPlayers()){
-                    Player target = Bukkit.getPlayer(uuid);
-
-                    target.showPlayer(player);
-                    player.showPlayer(target);
-                }
-            }
 
             arena.getPlayers().remove(player.getUniqueId());
             LobbyItem.removeItem(player);

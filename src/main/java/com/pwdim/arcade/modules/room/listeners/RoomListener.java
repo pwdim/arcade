@@ -79,38 +79,51 @@ public class RoomListener implements Listener {
                     player.sendMessage(ColorUtil.color("&bArena &c" + manageArenaID + " &bfinalizada com sucesso"));
                     player.playSound(player.getLocation(), Sound.ANVIL_USE, 2, player.getLocation().getPitch());
                     break;
+
+
                 case "ArenaDelete_Cancel":
                     player.playSound(player.getLocation(), Sound.STEP_STONE, 2, player.getLocation().getPitch());
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
                     break;
+
+
                 case "ArenaDelete_Menu":
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().deleteRoomInventory(arena)
                     );
                     break;
+
+
                 case "PlayerList_Menu":
                     player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     break;
+
+
                 case "ArenaDelete_Back":
                 case "PlayerList_Back":
                 case "ArenaManager_Menu":
                     player.openInventory(
                             plugin.getRoomManager().getRoomManageInventory().manageInventory(arena, player)
                     );
-
                     break;
+
+
                 case "ArenaManager_Back":
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(extractPage(title))
                     );
                     break;
+
+
                 case "Arenas_Menu":
                     player.openInventory(
                             plugin.getRoomManager().getRoomInventory().getInventory(0)
                     );
                     break;
+
+
 
                 case "PlayerManager_Menu":
                     if (target != null){
@@ -122,12 +135,16 @@ public class RoomListener implements Listener {
                         player.sendMessage(ColorUtil.color("&4&lERROR"));
                     }
                     break;
+
+
                 case "PlayerManager_GoTo":
                     plugin.getPlayerManager().sendToArena(
                             player
                     );
                     player.teleport(target.getLocation());
                     break;
+
+
             }
         }
     }

@@ -30,6 +30,25 @@ public class ArcadePlayerManager {
 
         switch (playerState){
             case LOBBY:
+                p.removePotionEffect(PotionEffectType.INVISIBILITY);
+                LobbyItem.removeItem(p);
+
+                for (UUID uuid :    arena.getPlayers()){
+
+                    if (!arena.getPlayers().isEmpty()){
+                        Player target = Bukkit.getPlayer(uuid);
+                        ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), arena);
+
+                        if (arcadeTarget.getState() == PlayerState.SPECTATOR){
+                            p.showPlayer(p);
+                            target.showPlayer(p);
+                        } else {
+                            target.hidePlayer(p);
+                        }
+                    }
+
+                }
+
                 break;
             case WAITING:
                 break;

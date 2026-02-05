@@ -39,7 +39,7 @@ public class GameManager {
                 break;
             case PLAYING:
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    arena.getPlayers().forEach(uuid -> LobbyItem.removeItem(Bukkit.getPlayer(uuid)));
+                    arena.getPlayers().forEach(uuid -> Bukkit.getPlayer(uuid).getInventory().clear());
                     arena.broadcastArena("&aO jogo iniciou!");
                 }, 25L);
                 break;
