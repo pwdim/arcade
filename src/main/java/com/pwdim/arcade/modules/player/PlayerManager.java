@@ -31,6 +31,11 @@ public class PlayerManager {
     public void sendToArena(Player player) {
         ArenaManager manager = plugin.getArenaManager();
 
+        if (manager.getPlayerArena(player) != null) {
+            manager.getPlayerArena(player).removePlayer(player);
+        }
+
+
         Arena bestArena = manager.getActiveArenas().values().stream()
                 .filter(arena -> arena.getState() == GameState.WAITING)
                 .filter(arena -> arena.getPlayers().size() < ConfigUtils.getMaxPLayers())
@@ -43,6 +48,7 @@ public class PlayerManager {
             arcadePlayer.setState(PlayerState.WAITING);
             teleportToArena(player, bestArena);
             LobbyItem.giveItem(player);
+            PlayAgainItem.removeItem(player);
             checkState(bestArena);
         } else {
 
