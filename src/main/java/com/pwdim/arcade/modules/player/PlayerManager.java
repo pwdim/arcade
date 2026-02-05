@@ -137,7 +137,7 @@ public class PlayerManager {
         }
 
         if ((arena.getState() == GameState.PLAYING) && (playersIn <= 1)){
-           arena.setState(GameState.ENDING);
+            plugin.getGameManager().setGameState(arena, GameState.ENDING);
         }
     }
 }

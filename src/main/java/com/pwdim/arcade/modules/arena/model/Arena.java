@@ -63,11 +63,6 @@ public class Arena {
         return state;
     }
 
-    public void setState(GameState state) {
-        this.state = state;
-        plugin.getGameManager().setGameState(this, state);
-    }
-
     public void addPlayer(Player player) {
         if (!getPlayers().contains(player.getUniqueId())) {
             getPlayers().add(player.getUniqueId());

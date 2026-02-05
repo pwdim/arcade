@@ -162,8 +162,7 @@ public class RoomListener implements Listener {
 
                 case "PlayerManager_Kill":
                     if (target != null) {
-                        ArcadePlayer arcadeTarget;
-                        arcadeTarget = new ArcadePlayer(target.getUniqueId(), plugin.getArenaManager().getPlayerArena(target));
+                        ArcadePlayer arcadeTarget = new ArcadePlayer(target.getUniqueId(), plugin.getArenaManager().getPlayerArena(target));
                         arcadeTarget.setState(PlayerState.SPECTATOR);
                         player.openInventory(plugin.getRoomManager().getRoomManageInventory().playersListInventory(arena));
                     }
